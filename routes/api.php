@@ -4,9 +4,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Authinctation;
 
-Route::post('/registerAsCompamy', [Authinctation::class, 'registerCompaany']);
+Route::post('register', [Authinctation::class, 'register']);
+Route::post('login', [Authinctation::class, 'login']);
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('logout', [Authinctation::class, 'logout']);
     Route::prefix('admin')->middleware(['admin'])->group(function () {
     });
 
@@ -14,6 +17,5 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     Route::prefix('employee')->middleware(['employee'])->group(function () {
-        //this new ?
     });
 });
