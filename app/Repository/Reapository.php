@@ -3,10 +3,12 @@
 namespace App\Repository;
 
 use App\Repository\Base;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Symfony\Component\HttpFoundation\Response;
 
-class Repository implements Base
+class Reapository implements Base
 {
     private $model;
     public function __construct($model)
@@ -23,12 +25,22 @@ class Repository implements Base
         return $this->model->find($id);
     }
 
-    public function create(array $data): Collection
+    public function create(Request $request): Response
     {
-        return $this->model->create($data);
+        $createdUser = $this->model->create($request);
+
+        if (!$createdUser) {
+            return response()->json([
+                'message' => 'Failed to create user',
+            ], 400);
+        }
+
+        return response()->json([
+            'data' => $createdUser,
+        ]);
     }
 
-    public function update($data, $id): Model
+    public function update($data, $id): Response
     {
         $user = $this->model->find($id);
 

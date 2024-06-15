@@ -2,21 +2,22 @@
 
 namespace App\Repository\Models;
 
-use App\Models\Company;
+use App\Repository\Reapository;
+use App\Models\Skills;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use App\Repository\Reapository;
 
-class CompanyRepo extends Reapository
+class SkillsRepo extends Reapository
 {
     public function __construct()
     {
-        parent::__construct(Company::class);
+        parent::__construct(Skills::class);
     }
+
 
     // just ex omar to see can it override the funciton ? don't wory 
     public function index(): Collection
     {
-        return Company::all();
+        return Skills::all();
     }
 }

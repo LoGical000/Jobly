@@ -5,8 +5,9 @@ namespace App\Repository;
 use App\Models\Address;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use App\Repository\Reapository;
 
-class AddressRepo extends Repository
+class AddressRepo extends Reapository
 {
     public function __construct()
     {
