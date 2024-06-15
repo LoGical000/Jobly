@@ -14,11 +14,11 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->date("Date of Establishment");
-            $table->integer("employe_number");
+            $table->string("Date_of_Establishment");
+            $table->unsignedInteger("employe_number");
             $table->string("Commercial_Record");
             $table->string("company_name");
-            $table->integer("contact_phone");
+            $table->unsignedInteger("contact_phone");
             $table->string("industry");
             $table->text("company_description");
             $table->string("company_website");

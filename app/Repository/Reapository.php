@@ -25,9 +25,10 @@ class Reapository implements Base
         return $this->model->find($id);
     }
 
-    public function create(Request $request): Response
+    public function create(array $data): Response
     {
-        $createdUser = $this->model->create($request);
+        // dd($data);
+        $createdUser = $this->model->create($data);
 
         if (!$createdUser) {
             return response()->json([
@@ -40,7 +41,7 @@ class Reapository implements Base
         ]);
     }
 
-    public function update($data, $id): Response
+    public function update(array $data, int $id): Response
     {
         $user = $this->model->find($id);
 

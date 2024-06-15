@@ -23,7 +23,6 @@ class Authinctation extends Controller
 
     function login(LoginRequest $request)
     {
-        // dd($request);
         $userData = $request->validated();
         return $this->repo->loginUser($userData);
     }

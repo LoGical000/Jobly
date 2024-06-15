@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Company::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Employee::class)->constrained()->onDelete('cascade');
-            $table->enum("rating",["1","2","3","4","5"]);
+            $table->enum("rating", [1, 2, 3, 4, 5]);
             $table->timestamps();
         });
     }

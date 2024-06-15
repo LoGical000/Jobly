@@ -11,7 +11,7 @@ interface Base
 {
     public function index(): Collection;
     public function show(int $id): Model;
-    public function create(Request $request): Response;
-    public function update(Request $request, int $id): Response;
+    public function create(array $request): Response;
+    public function update(array $request, int $id): Response;
     public function delete($id): bool;
 }

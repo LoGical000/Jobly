@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->string("CV");
-            $table->string("Age");
+            $table->integer("Age");
             $table->string("demonstration_video");
             $table->string("resume");
             $table->string("experience");

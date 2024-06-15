@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Jops_section::class)->constrained()->onDelete('cascade');
-          
+            $table->string("content");
             $table->timestamps();
         });
     }
