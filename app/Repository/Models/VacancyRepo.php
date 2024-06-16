@@ -6,6 +6,7 @@ use App\Repository\Reapository;
 use App\Models\Vacancy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
+use Symfony\Component\HttpFoundation\Response;
 
 class VacancyRepo extends Reapository
 {
@@ -14,10 +15,12 @@ class VacancyRepo extends Reapository
         parent::__construct(Vacancy::class);
     }
 
-
-    // just ex omar to see can it override the funciton ? don't wory 
-    public function index(): Collection
+    public function create(array $atter): Response
     {
-        return Vacancy::all();
+
+        $vacancy = Vacancy::create($atter);
+        return response()->json([
+            'data' => $vacancy,
+        ]);
     }
 }

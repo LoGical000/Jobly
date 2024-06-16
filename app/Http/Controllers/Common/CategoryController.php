@@ -27,7 +27,7 @@ class CategoryController extends Controller
         $atter = $request->validate([
             'category' => 'required',
         ]);
-        $sectcategoryion = Jops_category::create($atter);
+        $category = Jops_category::create($atter);
 
         return response()->json([
             'section' => $category,

@@ -17,9 +17,4 @@ class Jops_categoryRepo extends Reapository
     }
 
 
-    // just ex omar to see can it override the funciton ? don't wory 
-    // public function index(): Collection
-    // {
-    //     return Jops_category::all();
-    // }
 }

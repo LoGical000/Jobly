@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Vacancy;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Jops_section extends Model
 {
@@ -17,5 +18,10 @@ class Jops_section extends Model
     {
         return $this->belongsTo(Jops_category::class);
     }
-    
+
+
+    public function vacancy()
+    {
+        return $this->hasOne(Vacancy::class);
+    }
 }

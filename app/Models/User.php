@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Address;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,5 +52,9 @@ class User extends Authenticatable
     public function Company()
     {
         return $this->hasOne(Company::class);
+    }
+    public function address()
+    {
+        return $this->hasOne(Address::class);
     }
 }

@@ -2,11 +2,12 @@
 
 namespace App\Repository\Models;
 
-use App\Class\HelperFunction;
+use App\Models\Address;
 use App\Models\Company;
+use App\Class\HelperFunction;
+use App\Repository\Reapository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
-use App\Repository\Reapository;
 use Symfony\Component\HttpFoundation\Response;
 
 class CompanyRepo extends Reapository
@@ -16,11 +17,9 @@ class CompanyRepo extends Reapository
         parent::__construct(Company::class);
     }
 
-    // just ex omar to see can it override the funciton ? don't wory 
     public function index(): Response
     {
-        $data = Company::with('user')->get();
-
+        $data = Company::with(['user.address'])->first();
         return response()->json([
             'data' => $data,
         ]);

@@ -18,8 +18,5 @@ class LocationRepo extends Reapository
 
 
     // just ex omar to see can it override the funciton ? don't wory 
-    public function index(): Collection
-    {
-        return Location::all();
-    }
+ 
 }
