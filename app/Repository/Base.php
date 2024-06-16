@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface Base
 {
-    public function index(): Collection;
+    public function index(): Response;
     public function show(int $id): Model;
     public function create(array $request): Response;
     public function update(array $request, int $id): Response;

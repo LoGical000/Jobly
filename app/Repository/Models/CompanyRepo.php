@@ -17,9 +17,13 @@ class CompanyRepo extends Reapository
     }
 
     // just ex omar to see can it override the funciton ? don't wory 
-    public function index(): Collection
+    public function index(): Response
     {
-        return Company::all();
+        $data = Company::with('user')->get();
+
+        return response()->json([
+            'data' => $data,
+        ]);
     }
 
     public function create(array $data): Response

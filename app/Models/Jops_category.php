@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Jops_category extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'category',
+    ];
+
+    public function Jops_section()
+    {
+        return $this->hasMany(Jops_section::class);
+    }
 }

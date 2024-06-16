@@ -14,6 +14,10 @@ class CompanyController extends Controller
     {
         $this->repo = new CompanyRepo();
     }
+    public function index(){
+        return $this->repo->index();
+    }
+
     public function createComp(CompanyRequest $request)
     {
         $compData = $request->validated();

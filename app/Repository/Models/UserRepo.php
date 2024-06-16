@@ -8,6 +8,7 @@ use App\Repository\Reapository;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -17,14 +18,17 @@ class UserRepo extends Reapository
     {
         parent::__construct(User::class);
     }
-    // just ex omar to see can it override the funciton ? don't wory 
-    public function index(): Collection
+
+    public function index(): Response
     {
-        return User::all();
+        return response()->json([
+            'model' => auth()->user(),
+        ]);
     }
 
     public function createUser(array $request): Response
     {
+        $request['password'] = Hash::make($request['password']);
         $user = User::create($request);
         if (!$user) {
             return response()->json([
@@ -58,5 +62,4 @@ class UserRepo extends Reapository
             'message' => 'user logout success'
         ], 200);
     }
-
 }

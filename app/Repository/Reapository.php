@@ -15,9 +15,11 @@ class Reapository implements Base
     {
         return $this->model = app($model);
     }
-    public function index(): Collection
+    public function index(): Response
     {
-        return $this->model->all();
+        return response()->json([
+            'model' => $this->model->all()
+        ]);
     }
 
     public function show(int $id): Model
@@ -42,7 +44,6 @@ class Reapository implements Base
 
     public function update(array $data, int $id): Response
     {
-        // dd($this->model);
         $model = $this->model->find($id);
         if (!$model) {
             return response()->json([
