@@ -5,6 +5,7 @@ namespace App\Repository\Models;
 use App\Models\Address;
 use App\Models\Company;
 use App\Class\HelperFunction;
+use App\Models\User;
 use App\Repository\Reapository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
@@ -51,6 +52,17 @@ class CompanyRepo extends Reapository
 
         return response()->json([
             'data' => $createdUser,
+        ]);
+    }
+
+    public function index_1(int $id): Response
+    {
+        $user = User::where('id', $id)->first();
+        $data = $user->load('vacancy');
+        $data = $user->load('address');
+
+        return response()->json([
+            'data' => $data,
         ]);
     }
 }

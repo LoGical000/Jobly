@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Address;
+use App\Models\Vacancy;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -57,4 +58,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Address::class);
     }
+
+    public function vacancy()
+    {
+        return $this->hasMany(Vacancy::class);
+    }
+
 }

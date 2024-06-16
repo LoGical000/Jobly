@@ -25,6 +25,14 @@ class CompanyController extends Controller
         return $this->repo->create($compData);
     }
 
+    public function getvacancyByCompany(int $id)
+    {
+        return $this->repo->index_1($id);
+    }
+
+
+
+
     public function updateComp(CompanyRequest $request,int $id)
     {
         $compData = $request->validated();

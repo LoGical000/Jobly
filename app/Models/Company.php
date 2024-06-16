@@ -24,11 +24,7 @@ class Company extends Model
         'user_id',
     ];
 
-    public function vacancy()
-    {
-        return $this->hasMany(Vacancy::class);
-    }
-
+    
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -24,9 +24,9 @@ class Vacancy extends Model
         'user_id',
     ];
 
-    public function company()
+    public function user()
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(User::class);
     }
 
     public function location()

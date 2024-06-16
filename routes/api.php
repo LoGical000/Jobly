@@ -47,6 +47,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('delete/company/{id}', [CompanyController::class, 'deleteComp']);
 
         Route::get('vacancy/index', [VacancyController::class, 'index']);
+        Route::get('vacancy/getvacancyByCompany/{id}', [CompanyController::class, 'getvacancyByCompany']);
         Route::post('vacancy/create', [VacancyController::class, 'create']);
         Route::post('vacancy/update/{id}', [VacancyController::class, 'update']);
         Route::post('vacancy/delete/{id}', [VacancyController::class, 'delete']);

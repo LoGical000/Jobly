@@ -16,6 +16,13 @@ class VacancyController extends Controller
         $this->repo = new VacancyRepo();
     }
 
+    public function index()
+    {
+        return $this->repo->index();
+    }
+
+
+
     public function create(VacancyRequest $request)
     {
         $atter = $request->validated();
