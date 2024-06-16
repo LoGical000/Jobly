@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->string("Date_of_Establishment");
             $table->unsignedInteger("employe_number");
             $table->string("Commercial_Record");

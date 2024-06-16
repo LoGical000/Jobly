@@ -20,4 +20,18 @@ class CompanyController extends Controller
 
         return $this->repo->create($compData);
     }
+
+    public function updateComp(CompanyRequest $request,int $id)
+    {
+        $compData = $request->validated();
+
+        return $this->repo->update($compData, $id);
+    }
+
+    public function deleteComp(int $id)
+    {
+        return $this->repo->delete($id);
+    }
+
+
 }

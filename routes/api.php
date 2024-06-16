@@ -19,6 +19,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('company')->middleware([company::class])->group(function () {
         Route::post('create/company', [CompanyController::class, 'createComp']);
+        Route::post('update/company/{id}', [CompanyController::class, 'updateComp']);
+        Route::post('delete/company/{id}', [CompanyController::class, 'deleteComp']);
     });
 
     Route::prefix('employee')->middleware(['employee'])->group(function () {

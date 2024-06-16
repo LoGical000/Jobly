@@ -13,11 +13,11 @@ class Reapository implements Base
     private $model;
     public function __construct($model)
     {
-        return $this->model = $model;
+        return $this->model = app($model);
     }
     public function index(): Collection
     {
-        return $this->model->get();
+        return $this->model->all();
     }
 
     public function show(int $id): Model
@@ -27,7 +27,6 @@ class Reapository implements Base
 
     public function create(array $data): Response
     {
-        // dd($data);
         $createdUser = $this->model->create($data);
 
         if (!$createdUser) {
@@ -43,14 +42,32 @@ class Reapository implements Base
 
     public function update(array $data, int $id): Response
     {
-        $user = $this->model->find($id);
-
-        $new_user = $user->update($data);
-        return $new_user;
+        // dd($this->model);
+        $model = $this->model->find($id);
+        if (!$model) {
+            return response()->json([
+                'message' => 'Failed to find model',
+            ], 400);
+        }
+        if ($model->update($data)) {
+            return response()->json([
+                'data' => $model,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Failed to update model',
+            ], 400);
+        }
     }
 
     public function delete($id): bool
     {
-        return $this->model->delete($id);
+        $model = $this->model->find($id);
+        if (!$model) {
+            return false;
+        }
+        // dd($model);
+        $model->delete($model);
+        return true;
     }
 }

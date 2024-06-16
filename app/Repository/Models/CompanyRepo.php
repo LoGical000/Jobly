@@ -34,7 +34,8 @@ class CompanyRepo extends Reapository
             'company_description' => $data['company_description'],
             'company_website' => $data['company_website'],
             'contact_email' => $data['contact_email'],
-            'contact_person' => $data['contact_person']
+            'contact_person' => $data['contact_person'],
+            'user_id' => auth()->user()->id,
         ];
 
         $createdUser = Company::create($mappedData);
