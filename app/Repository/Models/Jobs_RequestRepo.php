@@ -15,11 +15,4 @@ class Jobs_RequestRepo extends Reapository
     {
         parent::__construct(Jobs_Request::class);
     }
-
-
-    // just ex omar to see can it override the funciton ? don't wory 
-    public function index(): Collection
-    {
-        return Jobs_Request::all();
-    }
 }

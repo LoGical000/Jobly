@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VacancyRequest;
 use App\Models\Vacancy;
+use App\Models\Jobs_Request;
 use App\Repository\Models\VacancyRepo;
 use Illuminate\Http\Request;
 
@@ -53,5 +54,17 @@ class VacancyController extends Controller
     public function delete(int $id)
     {
         return $this->repo->delete($id);
+    }
+
+    public function applayJobs(int $id)
+    {
+        $atter['user_id'] = auth()->user()->id;
+        $atter['vacancy_id'] = $id;
+
+        $request = Jobs_Request::create($atter);
+
+        return response()->json([
+            'data' => $request,
+        ]);
     }
 }

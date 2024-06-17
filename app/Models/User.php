@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Address;
 use App\Models\Vacancy;
+use App\Models\Jobs_Request;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,6 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'authentication',
+        'ban',
     ];
 
     /**
@@ -54,14 +57,35 @@ class User extends Authenticatable
     {
         return $this->hasOne(Company::class);
     }
+
+    /*
+    @ this is for the Address
+    */
     public function address()
     {
         return $this->hasOne(Address::class);
     }
 
+    /*
+    @ this is for the posting the vacacny "JOBS"
+    */
     public function vacancy()
     {
         return $this->hasMany(Vacancy::class);
     }
 
+    /*
+    @ this is for the jobs request
+    */
+    public function jobRequests()
+    {
+        return $this->hasMany(Jobs_Request::class);
+    }
+    /*
+    @ this is for the jobs request
+    */
+    public function vacancies()
+    {
+        return $this->belongsToMany(Vacancy::class, 'jobs__requests');
+    }
 }

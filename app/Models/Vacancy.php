@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Company;
+use App\Models\Jobs_Request;
 use App\Models\Address;
 use App\Models\Jops_section;
 use Illuminate\Database\Eloquent\Model;
@@ -37,5 +38,16 @@ class Vacancy extends Model
     public function section()
     {
         return $this->belongsTo(Jops_section::class);
+    }
+
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'jobs__requests');
+    }
+
+    public function jobRequests()
+    {
+        return $this->hasMany(Jobs_Request::class);
     }
 }

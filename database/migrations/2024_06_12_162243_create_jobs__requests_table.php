@@ -3,6 +3,7 @@
 use App\Models\Company;
 use App\Models\Vacancy;
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -17,11 +18,9 @@ return new class extends Migration
     {
         Schema::create('jobs__requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Company::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Vacancy::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(Employee::class)->constrained()->onDelete('cascade');
-            $table->enum("Statuse", ["Accepted", "Rejected", "pending"]);
-            $table->date("request_date");
+            $table->enum("status", ["Accepted", "Rejected", "pending"])->default("pending");
             $table->timestamps();
         });
     }

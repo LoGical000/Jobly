@@ -27,6 +27,8 @@ class UserRepo extends Reapository
     public function createUser(array $request): Response
     {
         $request['password'] = Hash::make($request['password']);
+        $request['ban'] = 0;
+        $request['authentication'] = 0;
         $user = User::create($request);
         if (!$user) {
             return response()->json([
