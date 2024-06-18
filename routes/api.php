@@ -78,6 +78,11 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
         Route::get('vacancy/getvacancyByCompany/{company_id}', [CompanyController::class, 'getvacancyByCompany']);
     });
 
+
     Route::prefix('employee')->middleware(['employee'])->group(function () {
+        Route::post('create/employee', [\App\Http\Controllers\Employee\EmployeeController::class, 'create']);
+
+
     });
+
 });

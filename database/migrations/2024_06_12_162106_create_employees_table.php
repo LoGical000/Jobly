@@ -15,16 +15,18 @@ return new class extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
-            $table->string("CV");
-            $table->integer("Age");
-            $table->string("demonstration_video");
+            //$table->string("first_name");
+            //$table->string("last_name");
+            //$table->string("cv");
+            $table->integer("age");
+            //$table->string("demonstration_video");
             $table->string("resume");
             $table->string("experience");
             $table->string("education");
             $table->string("portfolio");
-            $table->integer("phone_number");
-            $table->enum("work_status", ["not working"]);
-            $table->enum("graduation_status", ["graduation", "Not graduated"]);
+            $table->string("phone_number");
+            $table->enum("work_status", ["working","student","not working"]);
+            $table->enum("graduation_status", ["graduated", "Not graduated"]);
             $table->timestamps();
         });
     }
