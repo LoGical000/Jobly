@@ -18,7 +18,7 @@ class Reapository implements Base
     public function index(): Response
     {
         return response()->json([
-            'model' => $this->model->all()
+            'data' => $this->model->all()
         ]);
     }
 

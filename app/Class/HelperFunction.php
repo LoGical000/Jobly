@@ -12,18 +12,18 @@ class HelperFunction
     {
         $validated = $request->validated();
 
-        // Get the original file extension
-        $extension = $request->image->extension();
+        // // Get the original file extension
+        // $extension = $request->image->extension();
 
-        // Construct the file name with the correct extension
-        $imageName = time() . '-' . auth()->user()->name . '.' . $extension;
+        // // Construct the file name with the correct extension
+        // $imageName = time() . '-' . auth()->user()->name . '.' . $extension;
 
         // Move the file to the public/images directory
-        $imagePath = $request->file('image')->move(public_path('images'), $imageName);
+        $imagePath = $request->file('image')->move(public_path('images'), $validated['name']);
 
         return [
             'message' => true,
-            'image_path' => $imageName,
+            'image_path' => $validated['name'],
         ];
     }
     public function storeImage($image)
