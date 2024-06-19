@@ -11,8 +11,6 @@ use App\Repository\Models\EmployeeRepo;
 
 class EmployeeController extends Controller
 {
-
-    use UploadTrait;
     private $EmployeeRepository;
 
     public function __construct(EmployeeRepo $EmployeeRepository)
@@ -29,6 +27,12 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request)
     {
         return $this->EmployeeRepository->edit($request);
+
+    }
+
+    public function uploadVideo(Request $request)
+    {
+        return $this->EmployeeRepository->uploadVideo($request);
 
     }
 

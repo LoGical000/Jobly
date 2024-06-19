@@ -30,6 +30,14 @@ class Employee extends Model
     {
         return $this->morphOne(Image::class, 'imageable');
     }
+    public function video(): MorphOne
+    {
+        return $this->morphOne(Video::class, 'videoable');
+    }
+    public function skills()
+    {
+        return $this->hasOne(Skill::class);
+    }
 
 
 }

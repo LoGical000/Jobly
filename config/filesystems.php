@@ -43,6 +43,20 @@ return [
             'visibility'=>'public'
         ],
 
+        'upload_file'=>[
+            'driver'=>'local',
+            'root'=>public_path('files'),
+            'url'=>env('APP_URL').'/storage',
+            'visibility'=>'public'
+        ],
+
+        'upload_video'=>[
+            'driver'=>'local',
+            'root'=>public_path('videos'),
+            'url'=>env('APP_URL').'/storage',
+            'visibility'=>'public'
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

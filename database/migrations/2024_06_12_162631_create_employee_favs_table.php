@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('employee_favs', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\Employee::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Jops_category::class)->constrained()->onDelete('cascade');
 
             $table->timestamps();

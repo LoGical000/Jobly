@@ -40,8 +40,6 @@ class EmployeeRepo extends Reapository
 
         $employee = Employee::create($Data);
 
-
-
         if (!$employee)
             return $this->apiResponse('Failed to create Employee',null,false);
 
@@ -51,10 +49,8 @@ class EmployeeRepo extends Reapository
         $employee->load('image');
 
 
+
         return $this->apiResponse('Employee created successfully',$employee);
-
-
-
 
     }
 
@@ -102,13 +98,23 @@ class EmployeeRepo extends Reapository
 
             $employee->load('image');
 
-
-
             return $this->apiResponse('Employee updated successfully', $employee);
         } catch (\Exception $e) {
 
             return $this->apiResponse('Failed to update Employee: ' . $e->getMessage(), null, false);
         }
 
+    }
+
+    public function uploadVideo($request){
+        $employee = Employee::where('user_id', Auth::id())->with('skills')->first();
+        if ($request->has('video')){
+            if($employee->image){
+                $employee->video->delete();
+            }
+            $this->UploadVid($request,'video','videos','upload_video',$employee->id,'App\Models\Employee');
+            return $this->apiResponse('success',$employee);
+
+        }
     }
 }
