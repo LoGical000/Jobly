@@ -30,6 +30,7 @@ class UpdateEmployeeRequest extends FormRequest
             'phone_number' => ['string'],
             'work_status' => ['string', 'in:working,student,not working'],
             'graduation_status' => ['string', 'in:graduated,Not graduated'],
+            'photo' => ['nullable', 'image'],
         ];
     }
 }

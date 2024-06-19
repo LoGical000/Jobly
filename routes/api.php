@@ -90,3 +90,4 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     });
 
 });
+

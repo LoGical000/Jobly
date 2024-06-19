@@ -30,6 +30,7 @@ class CreateEmployeeRequest extends FormRequest
             'phone_number' => ['required', 'string'],
             'work_status' => ['required', 'string', 'in:working,student,not working'],
             'graduation_status' => ['required', 'string', 'in:graduated,Not graduated'],
+            'photo' => ['nullable', 'image'],
         ];
     }
 }

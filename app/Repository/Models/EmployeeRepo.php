@@ -3,6 +3,7 @@
 namespace App\Repository\Models;
 
 use App\Models\Employee;
+use App\Models\Image;
 use App\Repository\Base;
 use App\Traits\ResponseTrait;
 use App\Traits\UploadTrait;
@@ -37,14 +38,22 @@ class EmployeeRepo extends Reapository
 
         ];
 
-        $Employee = Employee::create($Data);
+        $employee = Employee::create($Data);
 
-        if (!$Employee)
+
+
+        if (!$employee)
             return $this->apiResponse('Failed to create Employee',null,false);
 
-        return $this->apiResponse('Employee created successfully',$Employee);
+        if ($request->has('photo'))
+            $this->UploadImage($request,'photo','Employees','upload_image',$employee->id,'App\Models\Employee');
 
-        //$this->UploadImage($request,'photo','doctors','upload_image',$doctor->id,'App\Models\Doctor');
+        $employee->load('image');
+
+
+        return $this->apiResponse('Employee created successfully',$employee);
+
+
 
 
     }
@@ -82,6 +91,17 @@ class EmployeeRepo extends Reapository
                 $updateData['graduation_status'] = $request->graduation_status;
 
             $employee->update($updateData);
+
+            if ($request->has('photo')){
+                if($employee->image){
+                    $employee->image->delete();
+                }
+            $this->UploadImage($request,'photo','Employees','upload_image',$employee->id,'App\Models\Employee');
+
+            }
+
+            $employee->load('image');
+
 
 
             return $this->apiResponse('Employee updated successfully', $employee);
