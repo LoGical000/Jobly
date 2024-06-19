@@ -25,7 +25,7 @@ class SectionController extends Controller
         $sections = Jops_category::where('id', $category_id)->with('Jops_section')->get();
 
         return response()->json([
-            'sections' => $sections,
+            'data' => $sections,
         ]);
     }
 

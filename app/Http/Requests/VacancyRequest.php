@@ -30,7 +30,7 @@ class VacancyRequest extends FormRequest
             'application_deadline' => 'required',
             'status' => 'required',
             'jops_section_id' => 'required',
-            'user_id' => 'required',
+            // 'user_id' => 'required',
         ];
     }
 }

@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string("description");
             $table->string("image");
             $table->enum("job_type", ["full_time", "part_time", "remotely"]);
+            $table->enum("status", ["closed", "open"]);
             $table->text("requirements");
             $table->integer("salary_range");
             $table->string("application_deadline");
-            $table->enum("status", ["closed", "open"]);
             $table->timestamps();
         });
     }

@@ -17,7 +17,7 @@ class VacancyRepo extends Reapository
 
     public function create(array $atter): Response
     {
-
+        $atter['user_id'] = auth()->user()->id;
         $vacancy = Vacancy::create($atter);
         return response()->json([
             'data' => $vacancy,
