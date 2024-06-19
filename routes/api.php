@@ -17,7 +17,8 @@ use App\Http\Middleware\Ban;
 
 Route::post('register', [Authinctation::class, 'register']);
 Route::post('login', [Authinctation::class, 'login']);
-
+Route::post('create/user', [Authinctation::class, 'register_app']);
+Route::post('login/employee', [Authinctation::class, 'login_app']);
 
 Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
@@ -80,7 +81,10 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
 
     Route::prefix('employee')->middleware(['employee'])->group(function () {
+
         Route::post('create/employee', [\App\Http\Controllers\Employee\EmployeeController::class, 'create']);
+        Route::post('update', [\App\Http\Controllers\Employee\EmployeeController::class, 'update']);
+
 
 
     });

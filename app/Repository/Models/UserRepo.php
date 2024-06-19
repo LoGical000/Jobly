@@ -3,6 +3,7 @@
 namespace App\Repository\Models;
 
 use App\Models\User;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 use App\Repository\Reapository;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserRepo extends Reapository
 {
+    use ResponseTrait;
     public function __construct()
     {
         parent::__construct(User::class);
@@ -39,6 +41,33 @@ class UserRepo extends Reapository
             'user' => $user,
             'token' => $user->createToken('secret')->plainTextToken,
         ]);
+    }
+
+    public function createUser_app(array $request): Response
+    {
+        $request['password'] = Hash::make($request['password']);
+        $request['ban'] = 0;
+        $request['authentication'] = 0;
+        $user = User::create($request);
+        if (!$user)
+            return $this->apiResponse('User not created',null,false);
+
+        $user->token = $user->createToken('secret')->plainTextToken;
+
+        return $this->apiResponse('success',$user);
+
+    }
+
+    public function loginUser_app(array $request): Response
+    {
+        if (!Auth::attempt($request))
+            return $this->apiResponse('Inavild Crdenatail',null,false);
+
+        $user = Auth::user();
+        $user->token = $user->createToken('secret')->plainTextToken;
+
+        return $this->apiResponse('success',$user);
+
     }
 
     public function loginUser(array $request): Response

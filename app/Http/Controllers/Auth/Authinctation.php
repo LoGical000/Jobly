@@ -23,6 +23,18 @@ class Authinctation extends Controller
         return $this->repo->createUser($userData);
     }
 
+    function register_app(RegisterRequest $request)
+    {
+        $userData = $request->validated();
+        return $this->repo->createUser_app($userData);
+    }
+
+    function login_app(LoginRequest $request)
+    {
+        $userData = $request->validated();
+        return $this->repo->loginUser_app($userData);
+    }
+
     function login(LoginRequest $request)
     {
         $userData = $request->validated();

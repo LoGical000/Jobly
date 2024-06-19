@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class UpdateEmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +22,14 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'unique:' . User::class],
-                'password' => ['required', 'min:8'],
-                'role' => ['required', 'string'],
+            'age' => ['integer'],
+            'resume' => ['string'],
+            'experience' => ['string'],
+            'education' => ['string'],
+            'portfolio' => ['string'],
+            'phone_number' => ['string'],
+            'work_status' => ['string', 'in:working,student,not working'],
+            'graduation_status' => ['string', 'in:graduated,Not graduated'],
         ];
     }
 }
