@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateFavoriteRequest;
 use App\Repository\Models\Employee_favRepo;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class Employee_favController extends Controller
         $this->Employee_favRepository = $Employee_favRepository;
     }
 
-    public function create(Request $request){
+    public function create(CreateFavoriteRequest $request){
         return $this->Employee_favRepository->store($request);
     }
 

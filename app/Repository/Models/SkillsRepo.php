@@ -23,11 +23,18 @@ class SkillsRepo extends Reapository
     public function store($request){
         $Data = [];
 
-        $Data['employee_id'] = Employee::where('user_id', Auth::id())->first()->id;
+        $employee = Employee::where('user_id', Auth::id())->with('skills')->first();
+
+
+
+        $Data['employee_id'] = $employee->id;
         if ($request->has('skill'))
             $Data['skill'] = $request->skill;
 
         if ($request->has('cv')){
+            if($employee->skills->cv){
+                Delete the cv
+            }
             $file = $request->file('cv');
             $name = \Str::slug($request->input('name'));
             $filename = time() . '-' .$name.  '.' . $file->getClientOriginalExtension();

@@ -11,6 +11,6 @@ class Employee_fav extends Model
 
     protected $fillable = [
         'employee_id',
-        'jops_category_id'
+        'jops_section_id'
     ];
 }
