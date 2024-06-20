@@ -27,7 +27,7 @@ class EmployeeRepo extends Reapository
             'user_id' => Auth::id(),
             //'first_name' => $request->first_name,
             //'last_name' => $request->last_name,
-            'age' => $request->age,
+            'date_of_birth' => $request->date_of_birth,
             'resume' => $request->resume,
             'experience' => $request->experience,
             'education' => $request->education,
@@ -62,8 +62,8 @@ class EmployeeRepo extends Reapository
             $updateData = [];
 
 
-            if ($request->has('age'))
-                $updateData['age'] = $request->age;
+            if ($request->has('date_of_birth'))
+                $updateData['date_of_birth'] = $request->date_of_birth;
 
             if ($request->has('resume'))
                 $updateData['resume'] = $request->resume;

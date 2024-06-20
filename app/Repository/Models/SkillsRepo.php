@@ -24,8 +24,8 @@ class SkillsRepo extends Reapository
         $Data = [];
 
         $Data['employee_id'] = Employee::where('user_id', Auth::id())->first()->id;
-        if ($request->has('skills'))
-            $Data['skills'] = $request->skills;
+        if ($request->has('skill'))
+            $Data['skill'] = $request->skill;
 
         if ($request->has('cv')){
             $file = $request->file('cv');
