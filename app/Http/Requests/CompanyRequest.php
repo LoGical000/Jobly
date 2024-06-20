@@ -33,7 +33,6 @@ class CompanyRequest extends FormRequest
             'company_description' => ['required', 'string'],
             'contact_email' => ['required', 'string'],
             'contact_person' => ['required', 'string'],
-
         ];
     }
 }

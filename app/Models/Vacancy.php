@@ -37,7 +37,7 @@ class Vacancy extends Model
 
     public function section()
     {
-        return $this->belongsTo(Jops_section::class);
+        return $this->belongsTo(Jops_section::class, 'jops_section_id');
     }
 
 

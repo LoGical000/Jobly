@@ -13,6 +13,7 @@ use App\Http\Controllers\Common\CategoryController;
 use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\Company\VacancyController;
 use App\Http\Controllers\Common\JobsRequestController;
+use App\Http\Controllers\common\locationController;
 use App\Http\Middleware\Ban;
 
 Route::post('register', [Authinctation::class, 'register']);
@@ -33,6 +34,9 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::post('address/update/{id}', [AddressController::class, 'update']);
     Route::post('address/delete/{id}', [AddressController::class, 'delete']);
 
+    Route::post('location/create/{vacancy_id}', [locationController::class, 'create']);
+    Route::post('location/update/{id}', [locationController::class, 'update']);
+    Route::post('location/delete/{id}', [locationController::class, 'delete']);
 
 
     Route::get('section/index', [SectionController::class, 'index']);
