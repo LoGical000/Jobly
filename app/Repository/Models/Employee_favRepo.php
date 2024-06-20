@@ -23,7 +23,7 @@ class Employee_favRepo extends Reapository
     public function store($request){
         $Data = [];
         $Data['employee_id'] = Employee::where('user_id', Auth::id())->first()->id;
-        $Data['jops_category_id'] = $request->job_category_id;
+        $Data['jops_section_id'] = $request->job_section_id;
         Employee_fav::create($Data);
 
         if(!$Data)

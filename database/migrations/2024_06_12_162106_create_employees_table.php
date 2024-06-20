@@ -18,12 +18,12 @@ return new class extends Migration
             //$table->string("first_name");
             //$table->string("last_name");
             //$table->string("cv");
-            $table->integer("age");
+            $table->date('date_of_birth');
             //$table->string("demonstration_video");
             $table->string("resume");
             $table->string("experience");
             $table->string("education");
-            $table->string("portfolio");
+            $table->string("portfolio")->nullable();
             $table->string("phone_number");
             $table->enum("work_status", ["working","student","not working"]);
             $table->enum("graduation_status", ["graduated", "Not graduated"]);

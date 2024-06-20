@@ -22,11 +22,11 @@ class CreateEmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'age' => ['required', 'integer'],
+            'date_of_birth'=>['required', 'date','date_format:Y-m-d'],
             'resume' => ['required', 'string'],
             'experience' => ['required', 'string'],
             'education' => ['required', 'string'],
-            'portfolio' => ['required', 'string'],
+            'portfolio' => ['nullable', 'string'],
             'phone_number' => ['required', 'string'],
             'work_status' => ['required', 'string', 'in:working,student,not working'],
             'graduation_status' => ['required', 'string', 'in:graduated,Not graduated'],
