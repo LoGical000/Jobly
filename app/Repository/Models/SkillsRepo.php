@@ -33,7 +33,7 @@ class SkillsRepo extends Reapository
 
         if ($request->has('cv')){
             if($employee->skills->cv){
-                Delete the cv
+                //Delete the cv
             }
             $file = $request->file('cv');
             $name = \Str::slug($request->input('name'));
