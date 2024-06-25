@@ -92,11 +92,14 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
         Route::post('upload/video', [\App\Http\Controllers\Employee\EmployeeController::class, 'uploadVideo']);
         Route::post('favorite/add', [\App\Http\Controllers\Employee\Employee_favController::class, 'create']);
         Route::get('favorite/show', [\App\Http\Controllers\Employee\Employee_favController::class, 'show']);
+        Route::post('cv/upload', [\App\Http\Controllers\Employee\EmployeeController::class, 'uploadCV']);
+
 
 
 
 
         Route::post('update', [\App\Http\Controllers\Employee\EmployeeController::class, 'update']);
+        Route::get('show', [\App\Http\Controllers\Employee\EmployeeController::class, 'show']);
 
 
 

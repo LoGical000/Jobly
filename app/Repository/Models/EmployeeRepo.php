@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 use App\Repository\Reapository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class EmployeeRepo extends Reapository
 {
@@ -90,6 +91,8 @@ class EmployeeRepo extends Reapository
 
             if ($request->has('photo')){
                 if($employee->image){
+                    $filename = $employee->image->filename;
+                    $this->Delete_Image('upload_image','Employees/' . $filename,$filename);
                     $employee->image->delete();
                 }
             $this->UploadImage($request,'photo','Employees','upload_image',$employee->id,'App\Models\Employee');
@@ -106,15 +109,43 @@ class EmployeeRepo extends Reapository
 
     }
 
+    public function showProfile(){
+        $user = Auth::user();
+        $employee = $user->employee()->with(['image', 'video', 'skills'])->first();
+        return $this->apiResponse('success',$employee);
+    }
+
+    public function uploadCV($request){
+        $employee  = Employee::where('user_id', Auth::id())->first();
+
+        if ($employee->cv) {
+            $this->Delete_file('upload_file', 'CVs/' . $employee->cv);
+        }
+
+        $file = $request->file('cv');
+        $name = \Str::slug($request->input('name'));
+        $filename = time() . '-' .$name.  '.' . $file->getClientOriginalExtension();
+
+        $employee->cv = $filename;
+        $employee->save();
+
+        $this->UploadPDF($request,'cv','CVs','upload_file',$filename);
+
+        return $this->apiResponse('success',$employee);
+    }
+
     public function uploadVideo($request){
-        $employee = Employee::where('user_id', Auth::id())->with('skills')->first();
-        if ($request->has('video')){
-            if($employee->image){
-                $employee->video->delete();
-            }
-            $this->UploadVid($request,'video','videos','upload_video',$employee->id,'App\Models\Employee');
-            return $this->apiResponse('success',$employee);
+        $employee = Employee::where('user_id', Auth::id())->first();
+        if ($employee->video){
+            $filename = $employee->video->filename;
+            $this->Delete_Video('upload_video','videos/' . $filename,$filename);
+            $employee->video->delete();
 
         }
+        $this->UploadVid($request,'video','videos','upload_video',$employee->id,'App\Models\Employee');
+        $employee->load('video');
+        return $this->apiResponse('success',$employee);
+
+
     }
 }

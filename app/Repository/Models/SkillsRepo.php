@@ -20,45 +20,9 @@ class SkillsRepo extends Reapository
         parent::__construct(Skill::class);
     }
 
-    public function store($request){
-        $Data = [];
-
-        $employee = Employee::where('user_id', Auth::id())->with('skills')->first();
-
-
-
-        $Data['employee_id'] = $employee->id;
-        if ($request->has('skill'))
-            $Data['skill'] = $request->skill;
-
-        if ($request->has('cv')){
-            if($employee->skills->cv){
-                //Delete the cv
-            }
-            $file = $request->file('cv');
-            $name = \Str::slug($request->input('name'));
-            $filename = time() . '-' .$name.  '.' . $file->getClientOriginalExtension();
-
-            $Data['cv'] = $filename;
-
-            $this->UploadPDF($request,'cv','CVs','upload_file',$filename);
-
-        }
-
-
-        $skill = Skill::create($Data);
-
-        if (!$skill)
-            return $this->apiResponse('Failed to create Skill',null,false);
-
-        return $this->apiResponse('Skill created successfully',$skill);
-
-
-    }
-
     public function showSkill(){
         $employee_id = Employee::where('user_id', Auth::id())->first()->id;
-        $skill = Skill::find($employee_id);
+        $skill = Skill::where('employee_id',$employee_id)->get();
         return $this->apiResponse('success',$skill);
     }
 

@@ -20,6 +20,7 @@ class Employee extends Model
         'phone_number',
         'work_status',
         'graduation_status',
+        'cv'
     ];
 
     public function user()
@@ -36,7 +37,7 @@ class Employee extends Model
     }
     public function skills()
     {
-        return $this->hasOne(Skill::class);
+        return $this->hasMany(Skill::class);
     }
 
 

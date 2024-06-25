@@ -12,12 +12,8 @@ class Skill extends Model
     protected $fillable = [
         'employee_id',
         'skill',
-        'cv'
+        //'cv'
 
     ];
 
-    public function skill()
-    {
-        return $this->belongsTo(Employee::class);
-    }
 }

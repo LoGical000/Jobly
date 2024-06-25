@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateSkillRequest extends FormRequest
+class UploadCVRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class CreateSkillRequest extends FormRequest
     public function rules(): array
     {
         return [
-           'skill' => ['required','string'],
+            'cv'=> ['required','mimes:pdf', 'max:2048']
 
         ];
     }

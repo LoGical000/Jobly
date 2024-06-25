@@ -22,7 +22,7 @@ class UpdateEmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'age' => ['integer'],
+            'date_of_birth'=>['date','date_format:Y-m-d'],
             'resume' => ['string'],
             'experience' => ['string'],
             'education' => ['string'],
@@ -30,7 +30,7 @@ class UpdateEmployeeRequest extends FormRequest
             'phone_number' => ['string'],
             'work_status' => ['string', 'in:working,student,not working'],
             'graduation_status' => ['string', 'in:graduated,Not graduated'],
-            'photo' => ['nullable', 'image'],
+            'photo' => ['image', 'mimes:jpeg,png,jpg,gif,svg'],
         ];
     }
 }
