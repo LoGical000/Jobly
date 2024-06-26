@@ -19,9 +19,10 @@ class Reapository implements Base
     }
     public function index(): Response
     {
-        return response()->json([
-            'data' => $this->model->all()
-        ]);
+//        return response()->json([
+//            'data' => $this->model->all()
+//        ]);
+        return $this->apiResponse('success',$this->model->all());
     }
 
     public function show(int $id): Model

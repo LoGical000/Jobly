@@ -16,10 +16,4 @@ class Jops_sectionRepo extends Reapository
         parent::__construct(Jops_section::class);
     }
 
-
-    // just ex omar to see can it override the funciton ? don't wory 
-    // public function index(): Collection
-    // {
-    //     return Jops_section::all();
-    // }
 }
