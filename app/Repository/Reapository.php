@@ -19,9 +19,10 @@ class Reapository implements Base
     }
     public function index(): Response
     {
-        return response()->json([
-            'data' => $this->model->all()
-        ]);
+//        return response()->json([
+//            'data' => $this->model->all()
+//        ]);
+        return $this->apiResponse('success',$this->model->all());
     }
 
     public function show(int $id): Model
@@ -37,7 +38,7 @@ class Reapository implements Base
 //            return response()->json([
 //                'message' => 'Failed to create user',
 //            ], 400);
-          return $this->apiResponse('Failed to create user',null,false);
+          return $this->apiResponse('Failed to create',null,false);
 
         }
 
@@ -45,7 +46,7 @@ class Reapository implements Base
 //            'message'=>'success',
 //            'data' => $createdUser,
 //        ]);
-        return $this->apiResponse('success',$createdUser);
+        return $this->apiResponse('Success',$createdUser);
 
     }
 
