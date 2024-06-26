@@ -21,7 +21,9 @@ Route::post('login', [Authinctation::class, 'login']);
 Route::post('create/user', [Authinctation::class, 'register_app']);
 Route::post('login/employee', [Authinctation::class, 'login_app']);
 
+
 Route::middleware(['auth:sanctum', 'ban'])->group(function () {
+
 
 
     Route::post('storeImage', [HeplerController::class, 'StoreImg']);
@@ -56,6 +58,9 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::post('ReqquestJobs/delete/{jobs_request_id}', [JobsRequestController::class, 'delete']);
     Route::post('ReqquestJobs/accept/{jobs_request_id}', [JobsRequestController::class, 'accept']);
     Route::post('ReqquestJobs/reject/{jobs_request_id}', [JobsRequestController::class, 'reject']);
+
+
+    Route::post('auth_request/create', [\App\Http\Controllers\Common\AuthRequestController::class, 'create']);
 
 
 
