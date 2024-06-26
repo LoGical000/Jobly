@@ -72,6 +72,7 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
     Route::prefix('company')->middleware(['company'])->group(function () {
         Route::get('index/company', [CompanyController::class, 'index']);
+        // Route::get('index/company', [CompanyController::class, 'index']);
         Route::post('create/company', [CompanyController::class, 'createComp']);
         Route::post('update/company/{company_id}', [CompanyController::class, 'updateComp']);
         Route::post('delete/company/{company_id}', [CompanyController::class, 'deleteComp']);
@@ -80,6 +81,8 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
         Route::post('vacancy/create', [VacancyController::class, 'create']);
         Route::post('vacancy/update/{vacancy_id}', [VacancyController::class, 'update']);
         Route::post('vacancy/delete/{vacancy_id}', [VacancyController::class, 'delete']);
+        Route::get('vacancy/singleVacancy/{vacancy_id}', [VacancyController::class, 's_index']);
+
         Route::get('vacancy/getvacancyByCompany/{company_id}', [CompanyController::class, 'getvacancyByCompany']);
     });
 
@@ -87,6 +90,7 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::prefix('employee')->middleware(['employee'])->group(function () {
 
         Route::post('create/employee', [\App\Http\Controllers\Employee\EmployeeController::class, 'create']);
+        
         Route::post('create/skill', [\App\Http\Controllers\Employee\SkillController::class, 'create']);
         Route::get('show/skill', [\App\Http\Controllers\Employee\SkillController::class, 'show']);
         Route::post('upload/video', [\App\Http\Controllers\Employee\EmployeeController::class, 'uploadVideo']);

@@ -7,10 +7,12 @@ use App\Http\Requests\VacancyRequest;
 use App\Models\Vacancy;
 use App\Models\Jobs_Request;
 use App\Repository\Models\VacancyRepo;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 
 class VacancyController extends Controller
 {
+    use ResponseTrait;
     private $repo;
     public function __construct()
     {
@@ -20,6 +22,13 @@ class VacancyController extends Controller
     public function index()
     {
         return $this->repo->index();
+    }
+
+    public function s_index($vacancy_id)
+    {
+        $Vacancy = Vacancy::where('id', '=', $vacancy_id)->with(['user.company', 'location', 'section'])->first();
+
+        return $this->apiResponse('Failed to create user', $Vacancy, true);
     }
 
 
