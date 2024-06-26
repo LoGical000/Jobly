@@ -61,6 +61,7 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
 
     Route::post('auth_request/create', [\App\Http\Controllers\Common\AuthRequestController::class, 'create']);
+    Route::post('auth_request/delete', [\App\Http\Controllers\Common\AuthRequestController::class, 'delete']);
 
 
 

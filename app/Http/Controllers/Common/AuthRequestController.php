@@ -19,4 +19,8 @@ class AuthRequestController extends Controller
     public function create(){
         return $this->AuthRequestRepository->store();
     }
+
+    public function delete(){
+        return $this->AuthRequestRepository->delete_request();
+    }
 }

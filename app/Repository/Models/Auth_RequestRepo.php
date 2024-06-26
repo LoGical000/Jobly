@@ -24,7 +24,7 @@ class Auth_RequestRepo extends Reapository
         if($user->auth_request){
             return $this->apiResponse('User already has an auth request',null,false);
         }
-        $Data['user_id'] = Auth::id();
+        $Data['user_id'] = $user->id;
         $Data['status'] = 'pending';
         $auth_request = Auth_Request::create($Data);
 
@@ -33,5 +33,18 @@ class Auth_RequestRepo extends Reapository
 
         return $this->apiResponse('failed to create auth request');
 
+    }
+
+    public function delete_request()
+    {
+        $user = Auth::user();
+        $authRequest = Auth_Request::where('user_id', $user->id)->first();
+
+        if (!$authRequest) {
+            return $this->apiResponse('No previous auth request');
+        }
+        $authRequest->delete();
+
+        return $this->apiResponse('success');
     }
 }
