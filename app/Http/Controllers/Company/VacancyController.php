@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Company;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VacancyRequest;
 use App\Models\Vacancy;
+use App\Models\User;
 use App\Models\Jobs_Request;
 use App\Repository\Models\VacancyRepo;
 use App\Traits\ResponseTrait;
@@ -75,7 +76,7 @@ class VacancyController extends Controller
                 'salary_range' => $vacancy->salary_range,
                 'application_deadline' => $vacancy->application_deadline,
             ];
-        });
+        })->first();
 
         return response()->json([
             'data' => $vacancies,
