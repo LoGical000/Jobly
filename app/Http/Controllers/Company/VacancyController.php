@@ -41,22 +41,44 @@ class VacancyController extends Controller
 
     public function update(Request $request, int $id)
     {
-        $Vacancy = Vacancy::where('id', '=', $id)->first();
 
-        $Vacancy->update([
-            'description' => $request->input('description') ?? $Vacancy['description'],
-            'image' => $request->input('image') ?? $Vacancy['image'],
-            'job_type' => $request->input('job_type') ?? $Vacancy['job_type'],
-            'requirements' => $request->input('requirements') ?? $Vacancy['requirements'],
-            'salary_range' => $request->input('salary_range') ?? $Vacancy['salary_range'],
-            'application_deadline' => $request->input('application_deadline') ?? $Vacancy['application_deadline'],
-            'status' => $request->input('status') ?? $Vacancy['status'],
-            'jops_section_id' => $request->input('jops_section_id') ?? $Vacancy['jops_section_id'],
-            'user_id' => $request->input('user_id') ?? $Vacancy['user_id'],
+        $vacancy = Vacancy::where('id', $id)->first();
+
+        $vacancy->update([
+            'description' => $request->input('description') ?? $vacancy['description'],
+            'image' => $request->input('image') ?? $vacancy['image'],
+            'job_type' => $request->input('job_type') ?? $vacancy['job_type'],
+            'requirements' => $request->input('requirements') ?? $vacancy['requirements'],
+            'salary_range' => $request->input('salary_range') ?? $vacancy['salary_range'],
+            'application_deadline' => $request->input('application_deadline') ?? $vacancy['application_deadline'],
+            'status' => $request->input('status') ?? $vacancy['status'],
+            'jops_section_id' => $request->input('jops_section_id') ?? $vacancy['jops_section_id'],
+            'user_id' => $request->input('user_id') ?? $vacancy['user_id'],
         ]);
 
+        $user = User::with(['vacancy.section', 'address', 'company'])->findOrFail(auth()->user()->id);
+
+        $vacancies = $user->vacancy->where('id', $id)->map(function ($vacancy) use ($user) {
+            return [
+                'company_name' => $user->company->company_name,
+                'county' => $user->address->county,
+                'city' => $user->address->city,
+                'Governorate' => $user->address->Governorate,
+                'section' => $vacancy->section->section,
+                'user_id' => $vacancy->user_id,
+                'vacancy_id' => $vacancy->id,
+                'description' => $vacancy->description,
+                'vacancy_image' => $vacancy->image,
+                'job_type' => $vacancy->job_type,
+                'status' => $vacancy->status,
+                'requirements' => $vacancy->requirements,
+                'salary_range' => $vacancy->salary_range,
+                'application_deadline' => $vacancy->application_deadline,
+            ];
+        });
+
         return response()->json([
-            'usVacancyer' => $Vacancy
+            'data' => $vacancies,
         ]);
     }
 
