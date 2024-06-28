@@ -23,12 +23,12 @@ class VacancyRequest extends FormRequest
     {
         return [
             'description' => 'required',
-            'image' => 'required',
-            'job_type' => 'required',
+            'image' => 'nullable',
+            'job_type' => 'required|in:full_time,part_time,remotely',
             'requirements' => 'required',
             'salary_range' => 'required',
             'application_deadline' => 'required',
-            'status' => 'required',
+            'status' => 'required|in:open,closed',
             'jops_section_id' => 'required',
             // 'user_id' => 'required',
         ];
