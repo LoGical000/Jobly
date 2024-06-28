@@ -63,8 +63,9 @@ class Authinctation extends Controller
 
     function index()
     {
-        return $this->repo->index();
+        return $this->repo->profile();
     }
+
 
 
     public function delete(int $id)

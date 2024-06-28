@@ -26,6 +26,28 @@ class UserRepo extends Reapository
         ]);
     }
 
+
+    public function profile(): Response
+    {
+        $user = auth()->user();
+
+        if ($user) {
+            if ($user->role === 2) {
+                $user->load(['Company', 'address']);
+            } else if ($user->role === 1) {
+                $user->load(['employee', 'address']);
+            }
+        }
+
+        // Return the user data as a JSON response
+        return response()->json([
+            'data' => $user,
+        ]);
+    }
+
+
+
+
     public function createUser(array $request): Response
     {
         $request['password'] = Hash::make($request['password']);
@@ -50,24 +72,22 @@ class UserRepo extends Reapository
         $request['authentication'] = 0;
         $user = User::create($request);
         if (!$user)
-            return $this->apiResponse('User not created',null,false);
+            return $this->apiResponse('User not created', null, false);
 
         $user->token = $user->createToken('secret')->plainTextToken;
 
-        return $this->apiResponse('success',$user);
-
+        return $this->apiResponse('success', $user);
     }
 
     public function loginUser_app(array $request): Response
     {
         if (!Auth::attempt($request))
-            return $this->apiResponse('Inavild Crdenatail',null,false);
+            return $this->apiResponse('Inavild Crdenatail', null, false);
 
         $user = Auth::user();
         $user->token = $user->createToken('secret')->plainTextToken;
 
-        return $this->apiResponse('success',$user);
-
+        return $this->apiResponse('success', $user);
     }
 
     public function loginUser(array $request): Response
