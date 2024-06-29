@@ -60,8 +60,12 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::post('ReqquestJobs/reject/{jobs_request_id}', [JobsRequestController::class, 'reject']);
 
     Route::get('vacancy/index', [VacancyController::class, 'getAllJobs']);
+    Route::get('vacancy/getByCategory/{category_id}', [VacancyController::class, 'getJobsByCategory']);
     Route::post('vacancy/create', [VacancyController::class, 'create_app']);
     Route::get('vacancy/delete/{id}', [VacancyController::class, 'delete']);
+    Route::get('vacancy/show/{id}', [VacancyController::class, 'getJob']);
+
+
 
 
 
@@ -109,6 +113,9 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
         Route::post('favorite/add', [\App\Http\Controllers\Employee\Employee_favController::class, 'create']);
         Route::get('favorite/show', [\App\Http\Controllers\Employee\Employee_favController::class, 'show']);
         Route::post('cv/upload', [\App\Http\Controllers\Employee\EmployeeController::class, 'uploadCV']);
+
+        Route::get('vacancy/getFavorite', [VacancyController::class, 'getJobsByFavorite']);
+
 
 
 

@@ -39,6 +39,9 @@ class Employee extends Model
     {
         return $this->hasMany(Skill::class);
     }
+    public function favorite(){
+        return $this->hasMany(Employee_fav::class);
+    }
 
 
 }

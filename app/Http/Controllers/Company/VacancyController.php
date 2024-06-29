@@ -36,6 +36,17 @@ class VacancyController extends Controller
         return $this->repo->getAllJobs();
     }
 
+    public function getJobsByCategory($category_id){
+        return $this->repo->getJobsByCategory($category_id);
+    }
+
+    public function getJobsByFavorite(){
+        return $this->repo->getJobsByFavorite();
+    }
+
+    public function getJob($id){
+        return $this->repo->getJob($id);
+    }
 
 
     public function create(VacancyRequest $request)
@@ -103,8 +114,9 @@ class VacancyController extends Controller
 
         $request = Jobs_Request::create($atter);
 
-        return response()->json([
-            'data' => $request,
-        ]);
+//        return response()->json([
+//            'data' => $request,
+//        ]);
+        return $this->apiResponse('success',$request);
     }
 }
