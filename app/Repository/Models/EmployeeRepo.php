@@ -24,20 +24,9 @@ class EmployeeRepo extends Reapository
     }
 
     public function store($request){
-        $Data = [
-            'user_id' => Auth::id(),
-            //'first_name' => $request->first_name,
-            //'last_name' => $request->last_name,
-            'date_of_birth' => $request->date_of_birth,
-            'resume' => $request->resume,
-            'experience' => $request->experience,
-            'education' => $request->education,
-            'portfolio' =>  $request->portfolio,
-            'phone_number' => $request->phone_number,
-            'work_status' => $request->work_status,
-            'graduation_status' => $request->graduation_status,
-
-        ];
+        $validatedData = $request->validated();
+        $Data = collect($validatedData)->except('image')->toArray();
+        $Data['user_id'] = Auth::id();
 
         $employee = Employee::create($Data);
 
@@ -48,8 +37,6 @@ class EmployeeRepo extends Reapository
             $this->UploadImage($request,'photo','Employees','upload_image',$employee->id,'App\Models\Employee');
 
         $employee->load('image');
-
-
 
         return $this->apiResponse('Employee created successfully',$employee);
 

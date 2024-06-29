@@ -40,6 +40,10 @@ class VacancyController extends Controller
         return $this->repo->create($atter);
     }
 
+    public function create_app(VacancyRequest $request){
+        return $this->repo->create_app($request);
+    }
+
     public function update(Request $request, int $id)
     {
 

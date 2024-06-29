@@ -96,13 +96,17 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::prefix('employee')->middleware(['employee'])->group(function () {
 
         Route::post('create/employee', [\App\Http\Controllers\Employee\EmployeeController::class, 'create']);
-        
+
         Route::post('create/skill', [\App\Http\Controllers\Employee\SkillController::class, 'create']);
         Route::get('show/skill', [\App\Http\Controllers\Employee\SkillController::class, 'show']);
         Route::post('upload/video', [\App\Http\Controllers\Employee\EmployeeController::class, 'uploadVideo']);
         Route::post('favorite/add', [\App\Http\Controllers\Employee\Employee_favController::class, 'create']);
         Route::get('favorite/show', [\App\Http\Controllers\Employee\Employee_favController::class, 'show']);
         Route::post('cv/upload', [\App\Http\Controllers\Employee\EmployeeController::class, 'uploadCV']);
+
+        Route::post('vacancy/create', [VacancyController::class, 'create_app']);
+        Route::get('vacancy/delete/{id}', [VacancyController::class, 'delete']);
+
 
 
 

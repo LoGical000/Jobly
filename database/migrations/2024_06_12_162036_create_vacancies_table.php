@@ -19,11 +19,11 @@ return new class extends Migration
             $table->foreignIdFor(Jops_section::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->string("description");
-            $table->string("image");
+            $table->string("image")->nullable();
             $table->enum("job_type", ["full_time", "part_time", "remotely"]);
             $table->enum("status", ["closed", "open"]);
             $table->text("requirements");
-            $table->integer("salary_range");
+            $table->string("salary_range");
             $table->string("application_deadline");
             $table->timestamps();
         });
