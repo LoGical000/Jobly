@@ -58,7 +58,7 @@ class VacancyRepo extends Reapository
             //The publisher is an employee
             if ($user->role == 1) {
                 $vacancy->name = $user->name;
-                $vacancy->publisher_photo  = '/Employees/' . $user->employee->image->filename;
+                $vacancy->publisher_photo  = 'Employees/' . $user->employee->image->filename;
             }
         unset($vacancy->user);
         }
