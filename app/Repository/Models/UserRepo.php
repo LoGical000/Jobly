@@ -111,4 +111,22 @@ class UserRepo extends Reapository
             'message' => 'user logout success'
         ], 200);
     }
+
+    // public function getCompany(): Response
+    // {
+    //     return response()->json([
+    //         'user' => auth()->user()->tokens()->delete(),
+    //         'message' => 'user logout success'
+    //     ], 200);
+    // }
+
+    // public function getUser(): Response
+    // {
+    //     return response()->json([
+    //         'user' => auth()->user()->tokens()->delete(),
+    //         'message' => 'user logout success'
+    //     ], 200);
+    // }
+
+    
 }

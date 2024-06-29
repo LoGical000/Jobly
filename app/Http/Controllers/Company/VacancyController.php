@@ -32,8 +32,11 @@ class VacancyController extends Controller
         return $this->apiResponse('Failed to create user', $Vacancy, true);
     }
 
-    public function getAllJobs(){
-        return $this->repo->getAllJobs();
+    public function getAllJobsforCompany(){
+        return $this->repo->getAllJobsforCompany();
+    }
+    public function getAllFreelacneJobs(){
+        return $this->repo->getAllJobsforEmployee();
     }
 
     public function getJobsByCategory($category_id){
@@ -114,9 +117,7 @@ class VacancyController extends Controller
 
         $request = Jobs_Request::create($atter);
 
-//        return response()->json([
-//            'data' => $request,
-//        ]);
+
         return $this->apiResponse('success',$request);
     }
 }

@@ -55,11 +55,20 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::get('vacancy/getjobsRequest', [JobsRequestController::class, 'getUserjobsRequest']);
     Route::get('vacancy/getRequestOnVacancy/{vacancy_id}', [JobsRequestController::class, 'getRequestOnVacancy']);
 
+
+    //-----------------/
+        Route::get('company', [UserController::class, 'company']);
+        Route::get('users', [UserController::class, 'users']);
+
+    //----------------/
+
     Route::post('ReqquestJobs/delete/{jobs_request_id}', [JobsRequestController::class, 'delete']);
     Route::post('ReqquestJobs/accept/{jobs_request_id}', [JobsRequestController::class, 'accept']);
     Route::post('ReqquestJobs/reject/{jobs_request_id}', [JobsRequestController::class, 'reject']);
 
-    Route::get('vacancy/index', [VacancyController::class, 'getAllJobs']);
+
+    Route::get('vacancy/index/', [VacancyController::class, 'getAllJobsforCompany']);
+    Route::get('vacancy/index/freelance/', [VacancyController::class, 'getAllFreelacneJobs']);
     Route::get('vacancy/getByCategory/{category_id}', [VacancyController::class, 'getJobsByCategory']);
     Route::post('vacancy/create', [VacancyController::class, 'create_app']);
     Route::get('vacancy/delete/{id}', [VacancyController::class, 'delete']);
@@ -92,7 +101,7 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
         Route::post('update/company/{company_id}', [CompanyController::class, 'updateComp']);
         Route::post('delete/company/{company_id}', [CompanyController::class, 'deleteComp']);
 
-        Route::get('vacancy/index', [VacancyController::class, 'index']);
+        // Route::get('vacancy/index', [VacancyController::class, 'index']);
         Route::post('vacancy/create', [VacancyController::class, 'create']);
         Route::post('vacancy/update/{vacancy_id}', [VacancyController::class, 'update']);
         Route::post('vacancy/delete/{vacancy_id}', [VacancyController::class, 'delete']);
