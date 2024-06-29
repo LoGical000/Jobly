@@ -44,4 +44,26 @@ class VacancyRepo extends Reapository
 
         return $this->apiResponse('success', $vacancy);
     }
+
+    public function getAllJobs(){
+        $vacancies = Vacancy::with('location')->get();
+
+        foreach ($vacancies as $vacancy) {
+            $user = $vacancy->user;
+            //The publisher is a company
+            if ($user->role == 2) {
+                $vacancy->name = $user->Company->company_name;
+                $vacancy->publisher_photo  = $user->Company->Commercial_Record;
+            }
+            //The publisher is an employee
+            if ($user->role == 1) {
+                $vacancy->name = $user->name;
+                $vacancy->publisher_photo  = '/Employees/' . $user->employee->image->filename;
+            }
+        unset($vacancy->user);
+        }
+
+
+        return $this->apiResponse('success',$vacancies);
+    }
 }

@@ -59,6 +59,9 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::post('ReqquestJobs/accept/{jobs_request_id}', [JobsRequestController::class, 'accept']);
     Route::post('ReqquestJobs/reject/{jobs_request_id}', [JobsRequestController::class, 'reject']);
 
+    Route::get('vacancy/index', [VacancyController::class, 'getAllJobs']);
+
+
 
     Route::post('auth_request/create', [\App\Http\Controllers\Common\AuthRequestController::class, 'create']);
     Route::post('auth_request/delete', [\App\Http\Controllers\Common\AuthRequestController::class, 'delete']);
@@ -92,6 +95,8 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
         Route::get('vacancy/getvacancyByCompany/{company_id}', [CompanyController::class, 'getvacancyByCompany']);
     });
 
+        Route::post('vacancy/create', [VacancyController::class, 'create_app']);
+        Route::get('vacancy/delete/{id}', [VacancyController::class, 'delete']);
 
     Route::prefix('employee')->middleware(['employee'])->group(function () {
 
@@ -104,8 +109,6 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
         Route::get('favorite/show', [\App\Http\Controllers\Employee\Employee_favController::class, 'show']);
         Route::post('cv/upload', [\App\Http\Controllers\Employee\EmployeeController::class, 'uploadCV']);
 
-        Route::post('vacancy/create', [VacancyController::class, 'create_app']);
-        Route::get('vacancy/delete/{id}', [VacancyController::class, 'delete']);
 
 
 

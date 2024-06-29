@@ -25,7 +25,7 @@ class EmployeeRepo extends Reapository
 
     public function store($request){
         $validatedData = $request->validated();
-        $Data = collect($validatedData)->except('image')->toArray();
+        $Data = collect($validatedData)->except('photo')->toArray();
         $Data['user_id'] = Auth::id();
 
         $employee = Employee::create($Data);

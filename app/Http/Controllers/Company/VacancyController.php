@@ -32,6 +32,10 @@ class VacancyController extends Controller
         return $this->apiResponse('Failed to create user', $Vacancy, true);
     }
 
+    public function getAllJobs(){
+        return $this->repo->getAllJobs();
+    }
+
 
 
     public function create(VacancyRequest $request)
