@@ -47,7 +47,7 @@ class VacancyRepo extends Reapository
         return $this->apiResponse('success', $vacancy);
     }
 
-    public function getAllJobsforCompany()
+    public function getAllJobsForCompany()
     {
         $vacancies = Vacancy::with(['location', 'user.company'])
             ->whereHas('user', function ($query) {
@@ -56,21 +56,22 @@ class VacancyRepo extends Reapository
             ->get();
         $vacancies = $vacancies->map(function ($vacancy) {
             return [
-                'company_name' => $vacancy->user->company->company_name,
+                'company_name' => $vacancy->user->company->company_name ?? null,
                 'section' => $vacancy->section->section,
-                'county' => $vacancy->user->address->county,
-                'city' => $vacancy->user->address->city,
-                'Governorate' => $vacancy->user->address->Governorate,
+                //'county' => $vacancy->user->address->county,
+                //'city' => $vacancy->user->address->city,
+                //'Governorate' => $vacancy->user->address->Governorate,
                 'vacancy_id' => $vacancy->id,
                 'user_id' => $vacancy->user_id,
                 'description' => $vacancy->description,
                 'vacancy_image' => $vacancy->image,
-                'publisher_photo' => $vacancy->user->company->Commercial_Record,
+                'publisher_photo' => $vacancy->user->company->Commercial_Record ?? null,
                 'job_type' => $vacancy->job_type,
                 'status' => $vacancy->status,
                 'requirements' => $vacancy->requirements,
                 'salary_range' => $vacancy->salary_range,
                 'application_deadline' => $vacancy->application_deadline,
+                'location' => $vacancy->location,
             ];
         });
 
@@ -78,7 +79,7 @@ class VacancyRepo extends Reapository
         return $this->apiResponse('success', $vacancies);
     }
 
-    public function getAllJobsforEmployee()
+    public function getAllJobsForEmployee()
     {
         $vacancies = Vacancy::with(['location', 'user.employee.image'])
             ->whereHas('user', function ($query) {
@@ -89,28 +90,32 @@ class VacancyRepo extends Reapository
             return [
                 'company_name' => $vacancy->user->name,
                 'section' => $vacancy->section->section,
-                'county' => $vacancy->user->address->county,
-                'city' => $vacancy->user->address->city,
-                'Governorate' => $vacancy->user->address->Governorate,
+                //'county' => $vacancy->user->address->county,
+                //'city' => $vacancy->user->address->city,
+                //'Governorate' => $vacancy->user->address->Governorate,
                 'vacancy_id' => $vacancy->id,
                 'user_id' => $vacancy->user_id,
                 'description' => $vacancy->description,
                 'vacancy_image' => $vacancy->image,
-                // 'publisher_photo' => 'Employees/' . $vacancy->user->employee->image->filename,
+                //'publisher_photo' => 'Employees/' . $vacancy->user->employee->image->filename,
+                'publisher_photo' => $vacancy->user->employee->image ? '/Employees/' . $vacancy->user->employee->image->filename : null,
                 // 'company_image' => $vacancy->user->company->Commercial_Record,
                 'job_type' => $vacancy->job_type,
                 'status' => $vacancy->status,
                 'requirements' => $vacancy->requirements,
                 'salary_range' => $vacancy->salary_range,
                 'application_deadline' => $vacancy->application_deadline,
+                'location' => $vacancy->location,
             ];
         });
 
 
         return $this->apiResponse('success', $vacancies);
     }
-    // public function getAllJobs()
-    // {
+
+
+    /* public function getAllJobs()
+     {
     //     $vacancies = Vacancy::with(['location', 'user.company', 'user.employee.image'])->where('')->get();
 
     //     foreach ($vacancies as $vacancy) {
@@ -135,7 +140,7 @@ class VacancyRepo extends Reapository
     //     }
 
     //     return $this->apiResponse('success', $vacancies);
-    // }
+     }*/
 
     public function getJobsByCategory($category_id)
     {

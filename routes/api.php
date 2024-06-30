@@ -67,8 +67,8 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::post('ReqquestJobs/reject/{jobs_request_id}', [JobsRequestController::class, 'reject']);
 
 
-    Route::get('vacancy/index/', [VacancyController::class, 'getAllJobsforCompany']);
-    Route::get('vacancy/index/freelance/', [VacancyController::class, 'getAllFreelacneJobs']);
+    Route::get('vacancy/index/companies', [VacancyController::class, 'getAllJobsForCompany']);
+    Route::get('vacancy/index/freelance', [VacancyController::class, 'getAllFreeLanceJobs']);
     Route::get('vacancy/getByCategory/{category_id}', [VacancyController::class, 'getJobsByCategory']);
     Route::post('vacancy/create', [VacancyController::class, 'create_app']);
     Route::get('vacancy/delete/{id}', [VacancyController::class, 'delete']);
