@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedInteger("employe_number");
             $table->string("Commercial_Record");
             $table->string("company_name");
-            $table->unsignedInteger("contact_phone");
+            $table->string("contact_phone");
             $table->string("industry");
             $table->text("company_description");
             $table->string("company_website");

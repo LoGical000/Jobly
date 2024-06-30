@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employee;
 use App\Models\Image;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,10 +14,14 @@ class ImageSeeder extends Seeder
      */
     public function run(): void
     {
-        $Image = new Image();
-        $Image->filename = 'photo.jpg';
-        $Image->imageable_id = 1;
-        $Image->imageable_type = 'App\Models\Employee';
-        $Image->save();
+        $employees = Employee::all();
+
+        // Create an image for each employee
+        foreach ($employees as $employee) {
+            Image::factory()->create([
+                'imageable_id' => $employee->id,
+                'imageable_type' => Employee::class,
+            ]);
+        }
     }
 }

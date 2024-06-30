@@ -2,25 +2,23 @@
 
 namespace Database\Seeders;
 
-use App\Models\Employee;
 use App\Models\User;
-use Database\Factories\EmployeeFactory;
+use App\Models\Vacancy;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class EmployeeSeeder extends Seeder
+class VacancySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-
         $users = User::all();
 
-
+        // Create one vacancy for each user
         $users->each(function ($user) {
-            Employee::factory()->create(['user_id' => $user->id]);
+            Vacancy::factory()->create(['user_id' => $user->id]);
         });
     }
 }

@@ -46,35 +46,13 @@ class EmployeeRepo extends Reapository
     {
         try {
 
+            $validatedData = $request->validated();
+            $updateData = collect($validatedData)->except('image')->toArray();
+
             $employee = Employee::where('user_id', Auth::id())->first();
-            $updateData = [];
-
-
-            if ($request->has('date_of_birth'))
-                $updateData['date_of_birth'] = $request->date_of_birth;
-
-            if ($request->has('resume'))
-                $updateData['resume'] = $request->resume;
-
-            if ($request->has('experience'))
-                $updateData['experience'] = $request->experience;
-
-            if ($request->has('education'))
-                $updateData['education'] = $request->education;
-
-            if ($request->has('portfolio'))
-                $updateData['portfolio'] = $request->portfolio;
-
-            if ($request->has('phone_number'))
-                $updateData['phone_number'] = $request->phone_number;
-
-            if ($request->has('work_status'))
-                $updateData['work_status'] = $request->work_status;
-
-            if ($request->has('graduation_status'))
-                $updateData['graduation_status'] = $request->graduation_status;
 
             $employee->update($updateData);
+
 
             if ($request->has('photo')){
                 if($employee->image){

@@ -26,9 +26,8 @@ class SkillFactory extends Factory
         ];
 
         return [
-         'employee_id'=>1,
-         'skill' => $this->faker->randomElement($skills),
-
+            'employee_id' => null,
+            'skill' => $this->faker->randomElement($skills),
         ];
     }
 }
