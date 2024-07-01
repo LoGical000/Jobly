@@ -57,20 +57,20 @@ class CompanyRepo extends Reapository
 
     public function index_1(int $id): Response
     {
-        $user = User::with(['vacancy.section', 'address', 'company'])->findOrFail($id);
+        $vacancies = User::with(['vacancy.section', 'vacancy.location'])->findOrFail($id);
 
-        // Transform the data to the desired structure
-        $vacancies = $user->vacancy->map(function ($vacancy) use ($user) {
+
+        $vacancies = $vacancies->vacancy->map(function ($vacancy) use ($vacancies) {
             return [
-                'company_name' => $user->company->company_name,
+                'company_name' => $vacancies->company->company_name,
                 'section' => $vacancy->section->section,
-                'county' => $user->address->county,
-                'city' => $user->address->city,
-                'Governorate' => $user->address->Governorate,
-                // 'vacancy' => [
                 'vacancy_id' => $vacancy->id,
-                // 'jops_section_id' => $vacancy->jops_section_id,
                 'user_id' => $vacancy->user_id,
+                // 'county' => $user->location->county,
+                // 'city' => $user->location->city,
+                // 'Governorate' => $user->location->Governorate,
+                // 'vacancy' => [
+                // 'jops_section_id' => $vacancy->jops_section_id,
                 'description' => $vacancy->description,
                 'vacancy_image' => $vacancy->image,
                 'job_type' => $vacancy->job_type,

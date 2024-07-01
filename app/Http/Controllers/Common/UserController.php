@@ -62,17 +62,21 @@ class UserController extends Controller
         ]);
     }
 
-    public function getCompany(){
-        return $this->repo->getCompany();
-    }
+    // public function getCompany(){
+    //     return $this->repo->getCompany();
+    // }
 
-    public function getUser()
-    {
-        return $this->repo->getUser();
-    }
+    // public function getUser()
+    // {
+    //     return $this->repo->getUser();
+    // }
 
     public function delete($user_id)
     {
         return $this->repo->delete($user_id);
+    }
+    public function company()
+    {
+        return $this->repo->company();
     }
 }

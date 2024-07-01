@@ -14,7 +14,6 @@ class Company extends Model
         'Date_of_Establishment',
         'employe_number',
         'Commercial_Record',
-        'Company_Logo',
         'company_name',
         'contact_phone',
         'industry',
@@ -25,7 +24,7 @@ class Company extends Model
         'user_id',
     ];
 
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);

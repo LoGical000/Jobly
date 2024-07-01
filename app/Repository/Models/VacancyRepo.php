@@ -23,10 +23,29 @@ class VacancyRepo extends Reapository
 
     public function create(array $atter): Response
     {
+        // $attributes['user_id'] = auth()->user()->id;
         $atter['user_id'] = auth()->user()->id;
+        
         $vacancy = Vacancy::create($atter);
+
+        $vacan = Vacancy::where('id', $vacancy->id)->with('section', 'location', 'user.company')->first();
+
+        $responseData = [
+            'company_name' => $vacan->user->company->company_name,
+            'section' => $vacan->section->section,
+            'vacancy_id' => $vacan->id,
+            'user_id' => $vacan->user_id,
+            'description' => $vacan->description,
+            'vacancy_image' => $vacan->image,
+            'job_type' => $vacan->job_type,
+            'status' => $vacan->status,
+            'requirements' => $vacan->requirements,
+            'salary_range' => $vacan->salary_range,
+            'application_deadline' => $vacan->application_deadline,
+        ];
+
         return response()->json([
-            'data' => $vacancy,
+            'data' => $responseData,
         ]);
     }
 
@@ -111,35 +130,6 @@ class VacancyRepo extends Reapository
 
         return $this->apiResponse('success', $vacancies);
     }
-
-
-    /* public function getAllJobs()
-     {
-    //     $vacancies = Vacancy::with(['location', 'user.company', 'user.employee.image'])->where('')->get();
-
-    //     foreach ($vacancies as $vacancy) {
-    //         $user = $vacancy->user;
-
-    //         if ($user) {
-    //             // The publisher is a company
-    //             if ($user->role == 2 && $user->company) {
-    //                 $vacancy->name = $user->company->company_name;
-    //                 $vacancy->publisher_photo = $user->company->Commercial_Record;
-    //             }
-
-    //             // The publisher is an employee
-    //             if ($user->role == 1 && $user->employee && $user->employee->image) {
-    //                 $vacancy->name = $user->name;
-    //                 $vacancy->publisher_photo = 'Employees/' . $user->employee->image->filename;
-    //             }
-    //         }
-
-
-    //         unset($vacancy->user);
-    //     }
-
-    //     return $this->apiResponse('success', $vacancies);
-     }*/
 
     public function getJobsByCategory($category_id)
     {

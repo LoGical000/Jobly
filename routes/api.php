@@ -56,9 +56,10 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::get('vacancy/getRequestOnVacancy/{vacancy_id}', [JobsRequestController::class, 'getRequestOnVacancy']);
 
 
-    //-----------------/
+    //----this for get the company-------------/
         Route::get('company', [UserController::class, 'company']);
-        Route::get('users', [UserController::class, 'users']);
+
+        // Route::get('users', [UserController::class, 'users']);
 
     //----------------/
 
@@ -84,7 +85,6 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
 
     Route::middleware(['admin'])->group(function () {
-
         Route::get('user/index/{user_id}', [UserController::class, 'index']);
         Route::post('user/delete/{user_id}', [UserController::class, 'delete']);
         Route::post('user/ban/{user_id}', [UserController::class, 'BanUser']);
@@ -105,9 +105,9 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
         Route::post('vacancy/create', [VacancyController::class, 'create']);
         Route::post('vacancy/update/{vacancy_id}', [VacancyController::class, 'update']);
         Route::post('vacancy/delete/{vacancy_id}', [VacancyController::class, 'delete']);
-        Route::get('vacancy/singleVacancy/{vacancy_id}', [VacancyController::class, 's_index']);
-
         Route::get('vacancy/getvacancyByCompany/{company_id}', [CompanyController::class, 'getvacancyByCompany']);
+
+        Route::get('vacancy/singleVacancy/{vacancy_id}', [VacancyController::class, 's_index']);
     });
 
 
