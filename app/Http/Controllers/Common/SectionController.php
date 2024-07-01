@@ -33,6 +33,20 @@ class SectionController extends Controller
         return $this->apiResponse('success',$sections);
     }
 
+    public function getSectionByCategory(int $category_id)
+    {
+        $sections = Jops_section::where('jops_category_id', $category_id)
+            ->get()
+            ->map(function ($section) {
+            return [
+                'id' => $section->id,
+                'section' => $section->section,
+            ];
+        });
+
+        return $this->apiResponse('success', $sections);
+    }
+
     public function create(Request $request, int $category_id){
         $atter = $request->validate([
             'section' => 'required',

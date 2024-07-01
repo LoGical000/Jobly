@@ -85,4 +85,16 @@ class CompanyRepo extends Reapository
             'data' => $vacancies,
         ]);
     }
+
+    public function getCompanies()
+    {
+        $companies = Company::all()->map(function ($company) {
+            return [
+                'company_name' => $company->company_name,
+                'company_image' => $company->Commercial_Record,
+            ];
+        });
+
+        return $this->apiResponse('success', $companies);
+    }
 }
