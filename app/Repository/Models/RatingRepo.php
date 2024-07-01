@@ -14,10 +14,9 @@ class RatingRepo extends Reapository
         parent::__construct(Rating::class);
     }
 
-
-    // just ex omar to see can it override the funciton ? don't wory 
-    public function index(): Collection
-    {
-        return Rating::all();
+    public function getRatingsForCompany($id){
+       $ratings =  Rating::where('company_id',$id)->get();
+       return $this->apiResponse('success',$ratings);
     }
+
 }

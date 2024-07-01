@@ -76,7 +76,11 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::post('vacancy/create', [VacancyController::class, 'create_app']);
     Route::get('vacancy/delete/{id}', [VacancyController::class, 'delete']);
     Route::get('vacancy/show/{id}', [VacancyController::class, 'getJob']);
+    Route::get('vacancy/filter', [VacancyController::class, 'getFilteredVacancies']);
     Route::get('vacancy/search', [VacancyController::class, 'search']);
+
+
+
 
 
 
@@ -88,6 +92,8 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
 
     Route::get('company/index', [CompanyController::class, 'getCompanies']);
+    Route::get('company/{id}', [CompanyController::class, 'getCompanyInfo']);
+
 
 
 
@@ -133,6 +139,11 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
         Route::post('cv/upload', [\App\Http\Controllers\Employee\EmployeeController::class, 'uploadCV']);
 
         Route::get('vacancy/getFavorite', [VacancyController::class, 'getJobsByFavorite']);
+
+
+        Route::get('ratings/company/{id}', [\App\Http\Controllers\Common\RatingController::class, 'getRatingsForCompany']);
+        Route::post('ratings/create', [\App\Http\Controllers\Common\RatingController::class, 'create']);
+
 
 
 

@@ -52,6 +52,10 @@ class VacancyController extends Controller
         return $this->repo->getJob($id);
     }
 
+    public function getFilteredVacancies(Request $request){
+        return $this->repo->getFilteredVacancies($request);
+    }
+
     public function search(Request $request){
         return $this->repo->search($request);
 

@@ -34,6 +34,10 @@ class CompanyController extends Controller
         return $this->repo->getCompanies();
     }
 
+    public function getCompanyInfo($id){
+        return $this->repo->getCompanyInfo($id);
+    }
+
 
 
 
