@@ -90,6 +90,7 @@ class CompanyRepo extends Reapository
     {
         $companies = Company::all()->map(function ($company) {
             return [
+                'id'=>$company->id,
                 'company_name' => $company->company_name,
                 'company_image' => $company->Commercial_Record,
             ];

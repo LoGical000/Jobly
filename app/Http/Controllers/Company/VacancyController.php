@@ -40,10 +40,6 @@ class VacancyController extends Controller
         return $this->repo->getAllJobsForEmployee();
     }
 
-    public function getJobsByCategory($category_id){
-        return $this->repo->getJobsByCategory($category_id);
-    }
-
     public function getJobsByFavorite(){
         return $this->repo->getJobsByFavorite();
     }

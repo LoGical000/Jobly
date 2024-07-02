@@ -19,6 +19,11 @@ class Jops_section extends Model
         return $this->belongsTo(Jops_category::class);
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Jops_category::class);
+    }
+
 
     public function vacancy()
     {
