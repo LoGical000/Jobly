@@ -117,12 +117,21 @@ class VacancyController extends Controller
 
     public function applayJobs(int $id)
     {
-        $atter['user_id'] = auth()->user()->id;
+        $userId = auth()->user()->id;
+
+        $existingRequest = Jobs_Request::where('user_id', $userId)
+                                       ->where('vacancy_id', $id)
+                                       ->first();
+
+        if ($existingRequest) {
+            return $this->apiResponse('You have already applied for this job', null, false);
+        }
+
+        $atter['user_id'] = $userId;
         $atter['vacancy_id'] = $id;
 
         $request = Jobs_Request::create($atter);
 
-
-        return $this->apiResponse('success',$request);
+        return $this->apiResponse('success', $request);
     }
 }
