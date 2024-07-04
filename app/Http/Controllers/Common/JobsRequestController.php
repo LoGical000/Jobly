@@ -57,9 +57,10 @@ class JobsRequestController extends Controller
         $data->update([
             'status' => "Accepted",
         ]);
-        return response()->json([
-            'data' => $data,
-        ]);
+//        return response()->json([
+//            'data' => $data,
+//        ]);
+        return $this->apiResponse('success',$data);
     }
 
     public function reject($jobs_request_id)
@@ -70,8 +71,10 @@ class JobsRequestController extends Controller
             'status' => "Rejected",
         ]);
 
-        return response()->json([
-            'data' => $data,
-        ]);
+//        return response()->json([
+//            'data' => $data,
+//        ]);
+        return $this->apiResponse('success',$data);
+
     }
 }

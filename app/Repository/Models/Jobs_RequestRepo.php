@@ -36,6 +36,7 @@ class Jobs_RequestRepo extends Reapository
             $date = Carbon::parse($jobApplication->created_at)->diffForHumans();
 
             return [
+                'id'=>$jobApplication->id,
                 'vacancy_id' => $jobApplication->vacancy->id,
                 'job_title' => $jobApplication->vacancy->description,
                 'status' => $jobApplication->status,
