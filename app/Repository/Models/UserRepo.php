@@ -114,13 +114,13 @@ class UserRepo extends Reapository
 
     public function company(): Response
     {
-        $comapnies = User::where('role', 2)->with('Company')->get();
+        $comapnies = User::where([['role', 2]])->with('Company')->get();
         $comapnies = $comapnies->map(function ($comapny) {
             return [
                 'company_name' => $comapny->company->company_name,
                 'comapny_id' => $comapny->company->id,
                 'user_id' => $comapny->id,
-                'image' => $comapny->Commercial_Record,
+                'image' => $comapny->company->Commercial_Record,
                 'description' => $comapny->company->company_description,
                 'company_website' => $comapny->company->company_website,
                 'contact_person' => $comapny->company->contact_person,

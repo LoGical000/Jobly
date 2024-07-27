@@ -97,4 +97,19 @@ class CompanyRepo extends Reapository
 
         return $this->apiResponse('success', $companies);
     }
+
+    public function getCompanyInfo($id){
+       $company =  Company::where('id',$id)->with('ratings','user')->first();
+       $company->address = $company->user->address;
+       unset($company->user);
+       return $this->apiResponse('success',$company);
+    }
+
+    public function profile($id){
+       $company =  Company::where('id',$id)->with('user.address','user.vacancy')->first();
+       $company->address = $company->user->address;
+       $company->vacancy = $company->user->vacancy;
+       unset($company->user);
+       return $this->apiResponse('success',$company);
+    }
 }

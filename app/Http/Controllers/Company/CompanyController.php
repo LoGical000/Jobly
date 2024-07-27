@@ -34,6 +34,10 @@ class CompanyController extends Controller
         return $this->repo->getCompanies();
     }
 
+    public function getCompanyInfo($id){
+        return $this->repo->getCompanyInfo($id);
+    }
+
 
 
 
@@ -48,6 +52,13 @@ class CompanyController extends Controller
     {
         return $this->repo->delete($id);
     }
+
+
+    public function profile(int $id)
+    {
+        return $this->repo->profile($id);
+    }
+
 
 
 }

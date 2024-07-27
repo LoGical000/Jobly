@@ -32,7 +32,6 @@ class EmployeeController extends Controller
 
     public function show(){
         return $this->EmployeeRepository->showProfile();
-
     }
 
     public function update(UpdateEmployeeRequest $request)
@@ -49,7 +48,11 @@ class EmployeeController extends Controller
     public function uploadVideo(UploadVideoRequest $request)
     {
         return $this->EmployeeRepository->uploadVideo($request);
+    }
 
+    public function profile($id)
+    {
+        return $this->EmployeeRepository->profile($id);
     }
 
 

@@ -43,5 +43,9 @@ class Employee extends Model
         return $this->hasMany(Employee_fav::class);
     }
 
+    public function ratings(){
+        return $this->hasMany(Rating::class);
+    }
+
 
 }

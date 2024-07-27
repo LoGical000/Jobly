@@ -4,6 +4,7 @@ namespace App\Repository\Models;
 
 use App\Models\Employee;
 use App\Models\Image;
+use App\Models\User;
 use App\Repository\Base;
 use App\Traits\ResponseTrait;
 use App\Traits\UploadTrait;
@@ -118,4 +119,11 @@ class EmployeeRepo extends Reapository
 
 
     }
+
+    public function profile($id){
+        $user = User::where('id',$id)->with('employee','employee.skills', 'employee.image', 'employee.video')->first();
+
+        return $this->apiResponse('success',$user);
+    }
+
 }
