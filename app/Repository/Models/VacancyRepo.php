@@ -98,6 +98,7 @@ class VacancyRepo extends Reapository
     }
 
     public function getFilteredVacancies($request)
+<<<<<<< HEAD
     {
         $cities = $request->input('cities', []);
         $job_section_ids = $request->input('job_section_ids', []);
@@ -136,42 +137,41 @@ class VacancyRepo extends Reapository
     }
 
     public function getJobsByCategory($category_id)
+=======
+>>>>>>> 0a239b7b5b79f9b0069a408a9674c0baa7f517a5
     {
-        $vacancies = Vacancy::with(['location', 'user.company', 'user.employee.image', 'section'])
-            ->whereHas('section', function ($query) use ($category_id) {
-                $query->where('jops_category_id', $category_id);
-            })
-            ->get();
+        $cities = $request->input('cities', []);
+        $job_section_ids = $request->input('job_section_ids', []);
+        $job_category_ids = $request->input('job_category_ids', []);
+        $job_types = $request->input('job_types', []);
 
+        $vacancies = Vacancy::with(['location', 'user.company', 'section']);
 
-        foreach ($vacancies as $vacancy) {
-            $user = $vacancy->user;
-            $location = $vacancy->location;
-
-            if ($user) {
-                // The publisher is a company
-                if ($user->role == 2 && $user->company) {
-                    $vacancy->name = $user->company->company_name;
-                    $vacancy->publisher_photo = $user->company->Commercial_Record;
-                }
-
-                // The publisher is an employee
-                if ($user->role == 1 && $user->employee && $user->employee->image) {
-                    $vacancy->name = $user->name;
-                    $vacancy->publisher_photo = 'Employees/' . $user->employee->image->filename;
-                }
-            }
-            if ($location) {
-                $vacancy->country = $vacancy->user->address->county;
-                $vacancy->city = $vacancy->user->address->city;
-                $vacancy->Governorate = $vacancy->user->address->Governorate;
-            }
-
-
-            unset($vacancy->user);
-            unset($vacancy->section);
-            unset($vacancy->location);
+        if (!empty($cities)) {
+            $vacancies->whereHas('location', function ($query) use ($cities) {
+                $query->whereIn('city', $cities);
+            });
         }
+
+        if (!empty($job_section_ids)) {
+            $vacancies->whereIn('jops_section_id', $job_section_ids);
+        }
+
+        if (!empty($job_category_ids)) {
+            $vacancies->whereHas('section', function ($query) use ($job_category_ids) {
+                $query->whereIn('jops_category_id', $job_category_ids);
+            });
+        }
+
+        if (!empty($job_types)) {
+            $vacancies->whereIn('job_type', $job_types);
+        }
+
+        $vacancies = $vacancies->get();
+
+        $vacancies = $vacancies->map(function ($vacancy) {
+            return $this->formatVacancyResponse($vacancy);
+        });
 
         return $this->apiResponse('success', $vacancies);
     }
@@ -195,27 +195,7 @@ class VacancyRepo extends Reapository
     public function getJob($id)
     {
         $vacancy = Vacancy::where('id', $id)->with(['location', 'user.company', 'user.employee.image'])->first();
-
-
-        $user = $vacancy->user;
-        if ($user) {
-            // The publisher is a company
-            if ($user->role == 2 && $user->company) {
-                $vacancy->name = $user->company->company_name;
-                $vacancy->publisher_photo = $user->company->Commercial_Record;
-            }
-
-            // The publisher is an employee
-            if ($user->role == 1 && $user->employee && $user->employee->image) {
-                $vacancy->name = $user->name;
-                $vacancy->publisher_photo = 'Employees/' . $user->employee->image->filename;
-            }
-        }
-
-
-        unset($vacancy->user);
-
-
+        $vacancy = $this->formatVacancyResponse($vacancy);
         return $this->apiResponse('success', $vacancy);
     }
 
@@ -232,31 +212,5 @@ class VacancyRepo extends Reapository
 
     }
 
-    /* public function getAllJobs()
- {
-//     $vacancies = Vacancy::with(['location', 'user.company', 'user.employee.image'])->where('')->get();
 
-//     foreach ($vacancies as $vacancy) {
-//         $user = $vacancy->user;
-
-//         if ($user) {
-//             // The publisher is a company
-//             if ($user->role == 2 && $user->company) {
-//                 $vacancy->name = $user->company->company_name;
-//                 $vacancy->publisher_photo = $user->company->Commercial_Record;
-//             }
-
-//             // The publisher is an employee
-//             if ($user->role == 1 && $user->employee && $user->employee->image) {
-//                 $vacancy->name = $user->name;
-//                 $vacancy->publisher_photo = 'Employees/' . $user->employee->image->filename;
-//             }
-//         }
-
-
-//         unset($vacancy->user);
-//     }
-
-//     return $this->apiResponse('success', $vacancies);
- }*/
 }

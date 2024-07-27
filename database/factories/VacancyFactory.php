@@ -20,11 +20,23 @@ class VacancyFactory extends Factory
     {
         $jobTypes = ["full_time", "part_time", "remotely"];
         $statuses = ["closed", "open"];
+        $itJobTitles = [
+            'Software Developer',
+            'Systems Analyst',
+            'Network Engineer',
+            'Database Administrator',
+            'Web Developer',
+            'IT Support Specialist',
+            'Cybersecurity Analyst',
+            'Data Scientist',
+            'DevOps Engineer',
+            'Mobile Application Developer'
+        ];
         $jopsSectionId = Jops_section::inRandomOrder()->first()->id;
         return [
             'jops_section_id' => $jopsSectionId, // This assumes you have a factory for Jops_section
             'user_id' => User::factory(), // Will be overridden in seeder
-            'description' => $this->faker->sentence,
+            'description' => $this->faker->randomElement($itJobTitles),
             'image' => null, // Or you can use $this->faker->imageUrl if you want random images
             'job_type' => $this->faker->randomElement($jobTypes),
             'status' => $this->faker->randomElement($statuses),

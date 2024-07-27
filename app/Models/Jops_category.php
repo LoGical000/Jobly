@@ -16,4 +16,5 @@ class Jops_category extends Model
     {
         return $this->hasMany(Jops_section::class);
     }
+
 }

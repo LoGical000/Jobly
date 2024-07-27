@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Models\Jops_category;
+
 trait ResponseTrait
 {
     public function apiResponse($message=null,$data=null,$status=true,$statuscode=200){
@@ -13,12 +15,17 @@ trait ResponseTrait
         ], $statuscode);
     }
 
-    protected function formatVacancyResponse($vacancy)
+    public function formatVacancyResponse($vacancy)
     {
         $user = $vacancy->user;
+        $section = $vacancy->section;
+        $category = Jops_category::where('id',$section->jops_category_id)->first()->category;
+
+
         return [
             'company_name' => $user ? ($user->role == 2 && $user->company ? $user->company->company_name : $user->name) : null,
-            'section' => $vacancy->section ? $vacancy->section->section : null,
+            'section' => $section ? $section->section : null,
+            'category' => $category ??  null, // Assuming the category name field is 'category_name'
             'vacancy_id' => $vacancy->id,
             'user_id' => $vacancy->user_id,
             'description' => $vacancy->description,

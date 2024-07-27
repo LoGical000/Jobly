@@ -6,11 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Jobs_Request;
 use App\Models\Vacancy;
 use App\Repository\Models\Jobs_RequestRepo;
+use App\Traits\ResponseTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobsRequestController extends Controller
 {
 
+    use ResponseTrait;
     private $repo;
     public function __construct()
     {
@@ -24,6 +28,12 @@ class JobsRequestController extends Controller
                 ->with(['vacancy'])
                 ->get(),
         ]);
+    }
+
+    public function getUserJobApplications()
+    {
+        return $this->repo->getUserJobApplications();
+
     }
 
 
@@ -47,9 +57,10 @@ class JobsRequestController extends Controller
         $data->update([
             'status' => "Accepted",
         ]);
-        return response()->json([
-            'data' => $data,
-        ]);
+//        return response()->json([
+//            'data' => $data,
+//        ]);
+        return $this->apiResponse('success',$data);
     }
 
     public function reject($jobs_request_id)
@@ -60,8 +71,10 @@ class JobsRequestController extends Controller
             'status' => "Rejected",
         ]);
 
-        return response()->json([
-            'data' => $data,
-        ]);
+//        return response()->json([
+//            'data' => $data,
+//        ]);
+        return $this->apiResponse('success',$data);
+
     }
 }
