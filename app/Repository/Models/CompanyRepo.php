@@ -105,7 +105,7 @@ class CompanyRepo extends Reapository
        unset($company->user);
        return $this->apiResponse('success',$company);
     }
-<<<<<<< HEAD
+
 
     public function profile($id){
        $company =  Company::where('id',$id)->with('user.address','user.vacancy')->first();
@@ -114,6 +114,5 @@ class CompanyRepo extends Reapository
        unset($company->user);
        return $this->apiResponse('success',$company);
     }
-=======
->>>>>>> 0a239b7b5b79f9b0069a408a9674c0baa7f517a5
+
 }
