@@ -98,47 +98,6 @@ class VacancyRepo extends Reapository
     }
 
     public function getFilteredVacancies($request)
-<<<<<<< HEAD
-    {
-        $cities = $request->input('cities', []);
-        $job_section_ids = $request->input('job_section_ids', []);
-        $job_category_ids = $request->input('job_category_ids', []);
-        $job_types = $request->input('job_types', []);
-
-        $vacancies = Vacancy::with(['location', 'user.company', 'section']);
-
-        if (!empty($cities)) {
-            $vacancies->whereHas('location', function ($query) use ($cities) {
-                $query->whereIn('city', $cities);
-            });
-        }
-
-        if (!empty($job_section_ids)) {
-            $vacancies->whereIn('jops_section_id', $job_section_ids);
-        }
-
-        if (!empty($job_category_ids)) {
-            $vacancies->whereHas('section', function ($query) use ($job_category_ids) {
-                $query->whereIn('jops_category_id', $job_category_ids);
-            });
-        }
-
-        if (!empty($job_types)) {
-            $vacancies->whereIn('job_type', $job_types);
-        }
-
-        $vacancies = $vacancies->get();
-
-        $vacancies = $vacancies->map(function ($vacancy) {
-            return $this->formatVacancyResponse($vacancy);
-        });
-
-        return $this->apiResponse('success', $vacancies);
-    }
-
-    public function getJobsByCategory($category_id)
-=======
->>>>>>> 0a239b7b5b79f9b0069a408a9674c0baa7f517a5
     {
         $cities = $request->input('cities', []);
         $job_section_ids = $request->input('job_section_ids', []);
