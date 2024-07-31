@@ -47,4 +47,9 @@ class Auth_RequestRepo extends Reapository
 
         return $this->apiResponse('success');
     }
+
+
+    public function accept(){
+
+    }
 }

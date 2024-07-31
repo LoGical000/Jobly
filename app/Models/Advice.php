@@ -10,6 +10,13 @@ class Advice extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['user_id', 'content'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function likes()
     {
         return $this->morphMany(Like::class, 'likeable');

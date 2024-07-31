@@ -17,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin' => \App\Http\Middleware\admin::class,
             'employee' => \App\Http\Middleware\employee::class,
             'company' => \App\Http\Middleware\company::class,
+            'bluebadge' => \App\Http\Middleware\BlueBadge::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

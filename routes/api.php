@@ -88,6 +88,8 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
     Route::post('auth_request/create', [\App\Http\Controllers\Common\AuthRequestController::class, 'create']);
     Route::post('auth_request/delete', [\App\Http\Controllers\Common\AuthRequestController::class, 'delete']);
+    Route::post('auth_request/accept', [\App\Http\Controllers\Common\AuthRequestController::class, 'accept']);
+
 
 
     Route::get('company/index', [CompanyController::class, 'getCompanies']);
@@ -95,6 +97,21 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
 
 
+    Route::post('advice/like/{id}', [\App\Http\Controllers\Common\AdviceController::class, 'like']);
+    Route::get('advice/index', [\App\Http\Controllers\Common\AdviceController::class, 'index']);
+    Route::post('advice/report', [\App\Http\Controllers\Common\AdviceController::class, 'report']);
+    Route::delete('advice/delete/{id}', [\App\Http\Controllers\Common\AdviceController::class, 'delete']);
+
+
+
+
+
+
+
+    Route::middleware(['bluebadge'])->group(function () {
+        Route::post('advice/create', [\App\Http\Controllers\Common\AdviceController::class, 'create']);
+
+    });
 
 
 
