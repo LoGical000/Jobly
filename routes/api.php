@@ -98,9 +98,28 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
 
     Route::post('advice/like/{id}', [\App\Http\Controllers\Common\AdviceController::class, 'like']);
-    Route::get('advice/index', [\App\Http\Controllers\Common\AdviceController::class, 'index']);
+    Route::get('advice/indexByLike', [\App\Http\Controllers\Common\AdviceController::class, 'indexByLike']);
+    Route::get('advice/indexByDate', [\App\Http\Controllers\Common\AdviceController::class, 'indexByDate']);
     Route::post('advice/report', [\App\Http\Controllers\Common\AdviceController::class, 'report']);
     Route::delete('advice/delete/{id}', [\App\Http\Controllers\Common\AdviceController::class, 'delete']);
+
+
+    Route::post('question/create', [\App\Http\Controllers\Common\QuestionController::class, 'create']);
+    Route::get('question/indexByDate', [\App\Http\Controllers\Common\QuestionController::class, 'indexByDate']);
+    Route::get('question/indexBySection/{id}', [\App\Http\Controllers\Common\QuestionController::class, 'indexBySection']);
+    Route::post('question/like/{id}', [\App\Http\Controllers\Common\QuestionController::class, 'like']);
+    Route::delete('question/delete/{id}', [\App\Http\Controllers\Common\QuestionController::class, 'delete']);
+    Route::post('question/report', [\App\Http\Controllers\Common\QuestionController::class, 'report']);
+
+    Route::post('answer/{id}', [\App\Http\Controllers\Common\AnswerController::class, 'create']);
+    Route::get('answer/{id}', [\App\Http\Controllers\Common\AnswerController::class, 'getAnswers']);
+    Route::delete('answer/{id}', [\App\Http\Controllers\Common\AnswerController::class, 'delete']);
+    Route::post('answer/like/{id}', [\App\Http\Controllers\Common\AnswerController::class, 'like']);
+    Route::post('report/answer', [\App\Http\Controllers\Common\AnswerController::class, 'report']);
+
+
+
+
 
 
 

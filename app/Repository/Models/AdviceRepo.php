@@ -22,32 +22,28 @@ class AdviceRepo extends Reapository
         parent::__construct(Advice::class);
     }
 
-    public function index(): Response
+    public function indexByLike()
     {
-
         $advices = Advice::with(['user.company', 'user.employee.image', 'user.auth_request'])
             ->get()
             ->sortByDesc(function ($advice) {
                 return $advice->likes()->count();
-            });
+            })
+            ->values();
 
+        $formattedAdvices = $this->formatResponses($advices);
 
-        $formattedAdvices = $advices->map(function ($advice) {
-            $user = $advice->user;
-            $isCompany = $user->role == 2;
-            $company = $user->company;
-            $employee = $user->employee;
-            $authRequest = $user->auth_request;
+        return $this->apiResponse('success', $formattedAdvices);
+    }
 
-            return [
-                'name' => $isCompany ? $company->company_name : $user->name,
-                'image' => $isCompany && $company ? $company->Commercial_Record : ($employee && $employee->image ? '/Employees/' . $employee->image->filename : null),
-                'is_auth' => $authRequest && $authRequest->status == 'accepted',
-                'time' => Carbon::parse($advice->created_at)->diffForHumans(),
-                'likes_count' => $advice->likes()->count(),
-                'content' => $advice->content,
-            ];
-        });
+    public function indexByDate()
+    {
+        $advices = Advice::with(['user.company', 'user.employee.image', 'user.auth_request'])
+            ->get()
+            ->sortByDesc('created_at')
+            ->values();
+
+        $formattedAdvices = $this->formatResponses($advices);
 
         return $this->apiResponse('success', $formattedAdvices);
     }

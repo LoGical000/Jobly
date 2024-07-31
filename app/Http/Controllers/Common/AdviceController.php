@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Common;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdviceRequest;
 use App\Http\Requests\ReportAdviceRequest;
+use App\Http\Requests\ReportAnswerRequest;
 use App\Models\Advice;
 use App\Repository\Models\AdviceRepo;
 use Illuminate\Http\Request;
@@ -25,9 +26,13 @@ class AdviceController extends Controller
         return $this->AdviceRepository->create($Data);
     }
 
-    public function index(){
-        return $this->AdviceRepository->index();
+    public function indexByLike(){
+        return $this->AdviceRepository->indexByLike();
 
+    }
+
+    public function indexByDate(){
+        return $this->AdviceRepository->indexByDate();
     }
 
     public function like($id){

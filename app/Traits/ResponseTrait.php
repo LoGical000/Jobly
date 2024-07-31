@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Jops_category;
+use Carbon\Carbon;
 
 trait ResponseTrait
 {
@@ -38,6 +39,51 @@ trait ResponseTrait
             'application_deadline' => $vacancy->application_deadline,
             'location' => $vacancy->location,
         ];
+    }
+
+    public function formatResponse($advice)
+    {
+        $user = $advice->user;
+        $isCompany = $user->role == 2;
+        $company = $user->company;
+        $employee = $user->employee;
+        $authRequest = $user->auth_request;
+
+        return [
+            'name' => $isCompany ? $company->company_name : $user->name,
+            'image' => $isCompany && $company ? $company->Commercial_Record : ($employee && $employee->image ? '/Employees/' . $employee->image->filename : null),
+            'is_auth' => $authRequest && $authRequest->status == 'accepted',
+            'time' => Carbon::parse($advice->created_at)->diffForHumans(),
+            'likes_count' => $advice->likes()->count(),
+            'content' => $advice->content,
+        ];
+    }
+
+    public function formatResponses($advices)
+    {
+        return $advices->map(function ($advice) {
+            return $this->formatResponse($advice);
+        });
+    }
+
+    public function formatQuestionResponse($questions){
+        return $questions->map(function ($advice) {
+            $user = $advice->user;
+            $isCompany = $user->role == 2;
+            $company = $user->company;
+            $employee = $user->employee;
+            $authRequest = $user->auth_request;
+
+            return [
+                'name' => $isCompany ? $company->company_name : $user->name,
+                'image' => $isCompany && $company ? $company->Commercial_Record : ($employee && $employee->image ? '/Employees/' . $employee->image->filename : null),
+                'is_auth' => $authRequest && $authRequest->status == 'accepted',
+                'time' => Carbon::parse($advice->created_at)->diffForHumans(),
+                'likes_count' => $advice->likes()->count(),
+                'content' => $advice->content,
+                'answers_count'=>$advice->answer()->count(),
+            ];
+        });
     }
 
 }
