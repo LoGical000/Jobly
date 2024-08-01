@@ -14,10 +14,4 @@ class AnnouncementRepo extends Reapository
         parent::__construct(Announcement::class);
     }
 
-
-    // just ex omar to see can it override the funciton ? don't wory 
-    public function index(): Collection
-    {
-        return Announcement::all();
-    }
 }

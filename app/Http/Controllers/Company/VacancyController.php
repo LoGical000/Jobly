@@ -35,6 +35,10 @@ class VacancyController extends Controller
     public function getAllJobsForCompany(){
         return $this->repo->getAllJobsForCompany();
     }
+    public function getAllJobsForOneCompany($id){
+        return $this->repo->getAllJobsForOneCompany($id);
+
+    }
 
     public function getAllFreeLanceJobs(){
         return $this->repo->getAllJobsForEmployee();

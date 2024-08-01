@@ -77,6 +77,8 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::get('vacancy/show/{id}', [VacancyController::class, 'getJob']);
     Route::get('vacancy/filter', [VacancyController::class, 'getFilteredVacancies']);
     Route::get('vacancy/search', [VacancyController::class, 'search']);
+    Route::get('vacancy/company/{id}', [VacancyController::class, 'getAllJobsForOneCompany']);
+
 
 
 

@@ -81,6 +81,24 @@ class VacancyRepo extends Reapository
         return $this->apiResponse('success', $vacancies);
     }
 
+    public function getAllJobsForOneCompany($id)
+    {
+
+        $vacancies = Vacancy::with(['location', 'user.company'])
+            ->whereHas('user', function ($query) use ($id) {
+                $query->where('user_id', $id);
+            })
+            ->get();
+
+
+        $vacancies = $vacancies->map(function ($vacancy) {
+            return $this->formatVacancyResponse($vacancy);
+        });
+
+        return $this->apiResponse('success', $vacancies);
+    }
+
+
     public function getAllJobsForEmployee()
     {
         $vacancies = Vacancy::with(['location', 'user.employee.image'])
