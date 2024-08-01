@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Auth_Request;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Models\Image;
@@ -37,6 +38,11 @@ class DatabaseSeeder extends Seeder
             'phone_number'=>'0951328247',
             'work_status'=>'working',
             'graduation_status'=>'graduated',
+        ]);
+
+        Auth_Request::create([
+            'user_id'=>1,
+            'status'=>'accepted'
         ]);
 
         User::factory(20)->create()->each(function ($user, $index) {

@@ -36,7 +36,7 @@ class QuestionsRepo extends Reapository
     }
 
     public function indexBySection($id){
-        $questions = Question::where('jops_section_id',$id)->with(['user.company', 'user.employee.image', 'user.auth_request'])
+        $questions = Question::where('jops_category_id',$id)->with(['user.company', 'user.employee.image', 'user.auth_request'])
             ->get()
             ->sortByDesc('created_at')
             ->values();

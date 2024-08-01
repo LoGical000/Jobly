@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\Jops_category;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 trait ResponseTrait
 {
@@ -41,33 +42,11 @@ trait ResponseTrait
         ];
     }
 
-    public function formatResponse($advice)
-    {
-        $user = $advice->user;
-        $isCompany = $user->role == 2;
-        $company = $user->company;
-        $employee = $user->employee;
-        $authRequest = $user->auth_request;
-
-        return [
-            'name' => $isCompany ? $company->company_name : $user->name,
-            'image' => $isCompany && $company ? $company->Commercial_Record : ($employee && $employee->image ? '/Employees/' . $employee->image->filename : null),
-            'is_auth' => $authRequest && $authRequest->status == 'accepted',
-            'time' => Carbon::parse($advice->created_at)->diffForHumans(),
-            'likes_count' => $advice->likes()->count(),
-            'content' => $advice->content,
-        ];
-    }
-
     public function formatResponses($advices)
     {
-        return $advices->map(function ($advice) {
-            return $this->formatResponse($advice);
-        });
-    }
+        $authUserId = Auth::id();
 
-    public function formatQuestionResponse($questions){
-        return $questions->map(function ($advice) {
+        return $advices->map(function ($advice) use ($authUserId) {
             $user = $advice->user;
             $isCompany = $user->role == 2;
             $company = $user->company;
@@ -75,13 +54,41 @@ trait ResponseTrait
             $authRequest = $user->auth_request;
 
             return [
+                'id' => $advice->id,
                 'name' => $isCompany ? $company->company_name : $user->name,
                 'image' => $isCompany && $company ? $company->Commercial_Record : ($employee && $employee->image ? '/Employees/' . $employee->image->filename : null),
                 'is_auth' => $authRequest && $authRequest->status == 'accepted',
                 'time' => Carbon::parse($advice->created_at)->diffForHumans(),
                 'likes_count' => $advice->likes()->count(),
                 'content' => $advice->content,
-                'answers_count'=>$advice->answer()->count(),
+                'is_mine' => $advice->user_id == $authUserId,
+                'is_liked' => $advice->likes()->where('user_id', $authUserId)->exists(),
+            ];
+        });
+    }
+
+    public function formatQuestionResponse($questions)
+    {
+        $authUserId = Auth::id();
+
+        return $questions->map(function ($advice) use ($authUserId) {
+            $user = $advice->user;
+            $isCompany = $user->role == 2;
+            $company = $user->company;
+            $employee = $user->employee;
+            $authRequest = $user->auth_request;
+
+            return [
+                'id' => $advice->id,
+                'name' => $isCompany ? $company->company_name : $user->name,
+                'image' => $isCompany && $company ? $company->Commercial_Record : ($employee && $employee->image ? '/Employees/' . $employee->image->filename : null),
+                'is_auth' => $authRequest && $authRequest->status == 'accepted',
+                'time' => Carbon::parse($advice->created_at)->diffForHumans(),
+                'likes_count' => $advice->likes()->count(),
+                'content' => $advice->content,
+                'answers_count' => $advice->answer()->count(),
+                'is_mine' => $advice->user_id == $authUserId,
+                'is_liked' => $advice->likes()->where('user_id', $authUserId)->exists(),
             ];
         });
     }

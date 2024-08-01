@@ -35,6 +35,11 @@ class AnswerController extends Controller
         return $this->AnswerRepository->like($id);
     }
 
+    public function update($id,AdviceRequest $request){
+        $Data = $request->validated();
+        return $this->AnswerRepository->update($Data,$id);
+    }
+
     public function delete($id){
         return $this->delete($id);
     }

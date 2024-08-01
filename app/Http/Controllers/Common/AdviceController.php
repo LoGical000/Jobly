@@ -45,6 +45,11 @@ class AdviceController extends Controller
 
     }
 
+    public function update($id,AdviceRequest $request){
+        $Data = $request->validated();
+        return $this->AdviceRepository->update($Data,$id);
+    }
+
     public function delete($id){
         return $this->AdviceRepository->delete($id);
 

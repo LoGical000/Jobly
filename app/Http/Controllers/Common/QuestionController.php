@@ -38,6 +38,12 @@ class QuestionController extends Controller
         return $this->QuestionRepository->like($id);
     }
 
+    public function update($id,AdviceRequest $request){
+        $Data = $request->validated();
+        return $this->QuestionRepository->update($Data,$id);
+
+    }
+
     public function delete($id){
         return $this->QuestionRepository->delete($id);
 

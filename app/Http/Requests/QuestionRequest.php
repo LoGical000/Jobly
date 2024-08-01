@@ -23,7 +23,7 @@ class QuestionRequest extends FormRequest
     {
         return [
 
-            'jops_section_id'=>['required','integer'],
+            'jops_category_id'=>['required','integer'],
             'content' => ['required','string','max:255'],
         ];
     }
