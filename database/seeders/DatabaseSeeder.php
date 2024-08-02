@@ -74,6 +74,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             SectionSeeder::class,
             VacancySeeder::class,
+            AnnouncementSeeder::class
 
 
 

@@ -93,4 +93,30 @@ trait ResponseTrait
         });
     }
 
+    public function formatAnnouncementsResponse($announcements)
+    {
+
+        return $announcements->map(function ($announcement) {
+            $user = $announcement->user;
+            $isCompany = $user->role == 2;
+            $company = $user->company;
+            $authRequest = $user->auth_request;
+
+            return [
+                'id' => $announcement->id,
+                'company_name' => $company->company_name,
+                'company_photo' => $company ? $company->Commercial_Record : null,
+                'is_auth' => $authRequest && $authRequest->status == 'accepted',
+                'company_email' => $company->contact_email,
+                'title' => $announcement->title,
+                'type' => $announcement->type,
+                'start_date' => $announcement->start_date,
+                'days' => $announcement->days,
+                'time' => $announcement->time,
+                'price' => $announcement->price,
+                'created_at' => Carbon::parse($announcement->created_at)->diffForHumans(),
+            ];
+        });
+    }
+
 }

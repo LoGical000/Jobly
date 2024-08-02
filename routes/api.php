@@ -123,6 +123,9 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::post('report/answer', [\App\Http\Controllers\Common\AnswerController::class, 'report']);
 
 
+    Route::get('announcement/index', [\App\Http\Controllers\Common\AnnouncementController::class, 'index']);
+
+
 
 
 
