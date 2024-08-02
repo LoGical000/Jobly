@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string("days");
             $table->string("time");
             $table->string("price");
+            $table->string("duration");
 
 
             $table->timestamps();

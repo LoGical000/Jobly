@@ -106,6 +106,7 @@ trait ResponseTrait
                 'id' => $announcement->id,
                 'company_name' => $company->company_name,
                 'company_photo' => $company ? $company->Commercial_Record : null,
+                'duration'=>$announcement->duration,
                 'is_auth' => $authRequest && $authRequest->status == 'accepted',
                 'company_email' => $company->contact_email,
                 'title' => $announcement->title,
@@ -117,6 +118,23 @@ trait ResponseTrait
                 'created_at' => Carbon::parse($announcement->created_at)->diffForHumans(),
             ];
         });
+    }
+
+    public function formatApplicationsResponse($applications){
+        return $applications->map(function ($application) {
+            $user = $application->user;
+            $employee = $user->employee;
+            $employeeImage = $employee && $employee->image ? '/Employees/' . $employee->image->filename : null;
+
+            return [
+                'id'=>$application->id,
+                'user_id'=>$user->id,
+                'name' => $user->name,
+                'image' => $employeeImage,
+                'application_date' => $application->created_at->diffForHumans(),
+            ];
+        });
+
     }
 
 }

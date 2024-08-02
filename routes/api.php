@@ -186,6 +186,10 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
         Route::get('vacancy/getFavorite', [VacancyController::class, 'getJobsByFavorite']);
         Route::get('vacancy/getMyApplications', [JobsRequestController::class, 'getUserJobApplications']);
+        Route::get('vacancy/getApplications/{id}', [JobsRequestController::class, 'getUserRequestsOnVacancy']);
+        Route::get('vacancy/getMyJobs', [VacancyController::class, 'getMyJobs']);
+
+
 
 
 

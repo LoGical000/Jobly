@@ -121,7 +121,7 @@ class EmployeeRepo extends Reapository
     }
 
     public function profile($id){
-        $user = User::where('id',$id)->with('employee','employee.skills', 'employee.image', 'employee.video')->first();
+        $user = User::where('id',$id)->with('employee','employee.skills', 'employee.image', 'employee.video','address')->first();
 
         return $this->apiResponse('success',$user);
     }
