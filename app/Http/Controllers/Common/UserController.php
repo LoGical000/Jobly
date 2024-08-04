@@ -51,6 +51,15 @@ class UserController extends Controller
         ]);
     }
 
+    public function usereBan()
+    {
+        $user = User::where('ban', 1)->all();
+        return response()->json([
+            'data' => $user,
+        ]);
+    }
+
+
     public function UnBanUser(int $id)
     {
         $user = User::where('id', $id)->first();
