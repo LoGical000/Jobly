@@ -128,6 +128,7 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
     Route::get('announcement/index', [\App\Http\Controllers\Common\AnnouncementController::class, 'index']);
     Route::post('announcement/create', [\App\Http\Controllers\Common\AnnouncementController::class, 'create']);
+    Route::post('announcement/delete/{id}', [\App\Http\Controllers\Common\AnnouncementController::class, 'delete']);
 
 
 

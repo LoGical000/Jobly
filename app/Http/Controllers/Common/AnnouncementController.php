@@ -7,6 +7,7 @@ use App\Http\Requests\AnnouncementRequest;
 use App\Repository\Models\AnnouncementRepo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Announcement;
 
 class AnnouncementController extends Controller
 {
@@ -26,5 +27,11 @@ class AnnouncementController extends Controller
         $Data['user_id'] = Auth::id();
 
         return $this->AnnouncementRepository->create($Data);
+    }
+    public function delete($id){
+        $announcement = Announcement::where('id',$id)->first();
+        return response()->json([
+            'data' => $announcement->delete(),
+        ]);
     }
 }
