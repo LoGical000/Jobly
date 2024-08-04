@@ -127,6 +127,9 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
 
     Route::get('announcement/index', [\App\Http\Controllers\Common\AnnouncementController::class, 'index']);
+    Route::post('announcement/create', [\App\Http\Controllers\Common\AnnouncementController::class, 'create']);
+
+
 
 
 
@@ -170,7 +173,9 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
         Route::get('vacancy/singleVacancy/{vacancy_id}', [VacancyController::class, 's_index']);
         Route::get('profile/{id}', [\App\Http\Controllers\Employee\EmployeeController::class, 'profile']);
-   
+
+
+
     });
 
 
