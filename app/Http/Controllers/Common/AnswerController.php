@@ -41,7 +41,7 @@ class AnswerController extends Controller
     }
 
     public function delete($id){
-        return $this->delete($id);
+        return $this->AnswerRepository->delete($id);
     }
 
     public function report(ReportAnswerRequest $request){

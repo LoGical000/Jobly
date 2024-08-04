@@ -126,6 +126,9 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::post('report/answer', [\App\Http\Controllers\Common\AnswerController::class, 'report']);
 
 
+    Route::get('announcement/index', [\App\Http\Controllers\Common\AnnouncementController::class, 'index']);
+
+
 
 
 
@@ -185,6 +188,10 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
         Route::get('vacancy/getFavorite', [VacancyController::class, 'getJobsByFavorite']);
         Route::get('vacancy/getMyApplications', [JobsRequestController::class, 'getUserJobApplications']);
+        Route::get('vacancy/getApplications/{id}', [JobsRequestController::class, 'getUserRequestsOnVacancy']);
+        Route::get('vacancy/getMyJobs', [VacancyController::class, 'getMyJobs']);
+
+
 
 
 
