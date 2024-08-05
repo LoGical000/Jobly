@@ -53,7 +53,7 @@ class Jobs_RequestRepo extends Reapository
     }
 
     public function getUserRequestsOnVacancy($id){
-        $applications = Jobs_Request::where('vacancy_id',$id)->with(['user.employee.image'])->get();
+        $applications = Jobs_Request::where('vacancy_id',$id)->where('status','pending')->with(['user.employee.image'])->get();
         $formattedApplicatoins = $this->formatApplicationsResponse($applications);
         return $this->apiResponse('success',$formattedApplicatoins);
     }

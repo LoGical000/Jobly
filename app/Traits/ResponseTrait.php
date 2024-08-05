@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Advice;
 use App\Models\Jops_category;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -134,6 +135,34 @@ trait ResponseTrait
                 'application_date' => $application->created_at->diffForHumans(),
             ];
         });
+
+    }
+
+    public function formatProfileResponse($user)
+    {
+        $user->load([
+            'employee.image',
+            'employee.video',
+            'employee.skills',
+            'address',
+
+        ]);
+
+
+        $user['points'] = $user->answers->count();
+
+        $advices = Advice::where('user_id',$user->id)->get();
+
+        $formattedAdvices = $this->formatResponses($advices);
+
+        $user['advices'] = $formattedAdvices;
+
+        $user['points'] = $user->answers->count();
+
+        unset($user->answers);
+
+
+        return $user;
 
     }
 
