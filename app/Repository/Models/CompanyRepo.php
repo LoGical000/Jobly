@@ -102,7 +102,18 @@ class CompanyRepo extends Reapository
     public function getCompanyInfo($id){
        $company =  Company::where('id',$id)->with('ratings','user')->first();
        $company->address = $company->user->address;
+       $avg=0.0;
+
+       if($company->ratings->isNotEmpty()){
+           $sum = $company->ratings->sum('rating');
+           $count = $company->ratings->count();
+           $avg = $sum / $count;
+       }
+
+       $company['avg'] = number_format($avg, 1);;
+
        unset($company->user);
+
        return $this->apiResponse('success',$company);
     }
 
