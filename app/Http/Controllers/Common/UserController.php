@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Common;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Repository\Models\UserRepo;
+use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    use ResponseTrait;
     private $repo;
     public function __construct()
     {
@@ -43,6 +45,10 @@ class UserController extends Controller
     public function BanUser(int $id)
     {
         $user = User::where('id', $id)->first();
+
+        if($user->ban == 1)
+            return $this->apiResponse('User already banned',null,false);
+
         $user->update([
             'ban' => 1,
         ]);

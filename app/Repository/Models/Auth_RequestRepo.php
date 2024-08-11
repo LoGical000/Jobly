@@ -53,7 +53,7 @@ class Auth_RequestRepo extends Reapository
 
         if($authRequest->status = 'pending'){
             $authRequest->delete();
-            return $this->apiResponse('Deleted successfully',null,false);
+            return $this->apiResponse('Deleted successfully',null);
 
         }
 
