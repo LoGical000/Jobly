@@ -48,11 +48,18 @@ class Auth_RequestRepo extends Reapository
         $authRequest = Auth_Request::where('user_id', $user->id)->first();
 
         if (!$authRequest) {
-            return $this->apiResponse('No previous auth request');
+            return $this->apiResponse('No previous auth request',null,false);
         }
-        $authRequest->delete();
 
-        return $this->apiResponse('success');
+        if($authRequest->status = 'pending'){
+            $authRequest->delete();
+            return $this->apiResponse('Deleted successfully',null,false);
+
+        }
+
+        else return $this->apiResponse('User already verified',null,false);
+
+
     }
 
     public function accept(){

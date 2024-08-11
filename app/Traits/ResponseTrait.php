@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Advice;
+use App\Models\Auth_Request;
 use App\Models\Jops_category;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -155,7 +156,16 @@ trait ResponseTrait
 
         $advices = Advice::where('user_id',$user->id)->get();
 
+        $auth = Auth_Request::where('user_id',$user->id)->first();
+
+
         $formattedAdvices = $this->formatResponses($advices);
+
+        if(!$auth) $user['authentication'] = 0;
+
+        else if($auth->status == 'accepted') $user['authentication'] = 1;
+
+        else $user['authentication'] = 0;
 
         $user['advices'] = $formattedAdvices;
 
