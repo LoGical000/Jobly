@@ -22,9 +22,15 @@ class Auth_RequestRepo extends Reapository
 
     public function store() {
         $user = Auth::user();
-        if($user->auth_request){
+
+        if($user->auth_request && $user->auth_request->status == 'pending')
             return $this->apiResponse('User already has an auth request',null,false);
-        }
+
+
+        else if($user->auth_request && $user->auth_request->status == 'accepted')
+            return $this->apiResponse('User already verified',null,false);
+
+
         $Data['user_id'] = $user->id;
         $Data['status'] = 'pending';
         $auth_request = Auth_Request::create($Data);
@@ -48,7 +54,6 @@ class Auth_RequestRepo extends Reapository
 
         return $this->apiResponse('success');
     }
-
 
     public function accept(){
         $authRequest = Auth_Request::where('id', $id)->first();
@@ -78,7 +83,6 @@ class Auth_RequestRepo extends Reapository
             'data' => $authRequest,
         ]);
     }
-
 
     public function getRequest()
     {

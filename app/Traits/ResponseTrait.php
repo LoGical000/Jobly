@@ -56,6 +56,7 @@ trait ResponseTrait
 
             return [
                 'id' => $advice->id,
+                'user_id' => $user->id,
                 'name' => $isCompany ? $company->company_name : $user->name,
                 'image' => $isCompany && $company ? $company->Commercial_Record : ($employee && $employee->image ? '/Employees/' . $employee->image->filename : null),
                 'is_auth' => $authRequest && $authRequest->status == 'accepted',
@@ -81,6 +82,7 @@ trait ResponseTrait
 
             return [
                 'id' => $advice->id,
+                'user_id' => $user->id,
                 'name' => $isCompany ? $company->company_name : $user->name,
                 'image' => $isCompany && $company ? $company->Commercial_Record : ($employee && $employee->image ? '/Employees/' . $employee->image->filename : null),
                 'is_auth' => $authRequest && $authRequest->status == 'accepted',
