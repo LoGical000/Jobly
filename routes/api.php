@@ -131,6 +131,7 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
     Route::post('announcement/delete/{id}', [\App\Http\Controllers\Common\AnnouncementController::class, 'delete']);
 
 
+    Route::get('getCites', [\App\Http\Controllers\Common\LocationController::class, 'getCities']);
 
 
 

@@ -16,7 +16,11 @@ class LocationRepo extends Reapository
         parent::__construct(Location::class);
     }
 
+    public function getCities(){
+        $cities = Location::all();
+        return $this->apiResponse('success',$cities);
+    }
 
-    // just ex omar to see can it override the funciton ? don't wory 
- 
+
+
 }

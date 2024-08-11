@@ -37,4 +37,8 @@ class locationController extends Controller
     {
         return $this->repo->delete($id);
     }
+
+    public function getCities(){
+        return $this->repo->getCities();
+    }
 }
