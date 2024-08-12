@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Models\Advice;
+use App\Models\Auth_Request;
 use App\Models\Jops_category;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +57,7 @@ trait ResponseTrait
 
             return [
                 'id' => $advice->id,
+                'user_id' => $user->id,
                 'name' => $isCompany ? $company->company_name : $user->name,
                 'image' => $isCompany && $company ? $company->Commercial_Record : ($employee && $employee->image ? '/Employees/' . $employee->image->filename : null),
                 'is_auth' => $authRequest && $authRequest->status == 'accepted',
@@ -80,6 +83,7 @@ trait ResponseTrait
 
             return [
                 'id' => $advice->id,
+                'user_id' => $user->id,
                 'name' => $isCompany ? $company->company_name : $user->name,
                 'image' => $isCompany && $company ? $company->Commercial_Record : ($employee && $employee->image ? '/Employees/' . $employee->image->filename : null),
                 'is_auth' => $authRequest && $authRequest->status == 'accepted',
@@ -91,6 +95,87 @@ trait ResponseTrait
                 'is_liked' => $advice->likes()->where('user_id', $authUserId)->exists(),
             ];
         });
+    }
+
+    public function formatAnnouncementsResponse($announcements)
+    {
+
+        return $announcements->map(function ($announcement) {
+            $user = $announcement->user;
+            $isCompany = $user->role == 2;
+            $company = $user->company;
+            $authRequest = $user->auth_request;
+
+            return [
+                'id' => $announcement->id,
+                'company_name' => $company->company_name,
+                'company_photo' => $company ? $company->Commercial_Record : null,
+                'duration'=>$announcement->duration,
+                'is_auth' => $authRequest && $authRequest->status == 'accepted',
+                'company_email' => $company->contact_email,
+                'title' => $announcement->title,
+                'type' => $announcement->type,
+                'start_date' => $announcement->start_date,
+                'days' => $announcement->days,
+                'time' => $announcement->time,
+                'price' => $announcement->price,
+                'created_at' => Carbon::parse($announcement->created_at)->diffForHumans(),
+            ];
+        });
+    }
+
+    public function formatApplicationsResponse($applications){
+        return $applications->map(function ($application) {
+            $user = $application->user;
+            $employee = $user->employee;
+            $employeeImage = $employee && $employee->image ? '/Employees/' . $employee->image->filename : null;
+
+            return [
+                'id'=>$application->id,
+                'user_id'=>$user->id,
+                'name' => $user->name,
+                'image' => $employeeImage,
+                'application_date' => $application->created_at->diffForHumans(),
+            ];
+        });
+
+    }
+
+    public function formatProfileResponse($user)
+    {
+        $user->load([
+            'employee.image',
+            'employee.video',
+            'employee.skills',
+            'address',
+
+        ]);
+
+
+        $user['points'] = $user->answers->count();
+
+        $advices = Advice::where('user_id',$user->id)->get();
+
+        $auth = Auth_Request::where('user_id',$user->id)->first();
+
+
+        $formattedAdvices = $this->formatResponses($advices);
+
+        if(!$auth) $user['authentication'] = 0;
+
+        else if($auth->status == 'accepted') $user['authentication'] = 1;
+
+        else $user['authentication'] = 0;
+
+        $user['advices'] = $formattedAdvices;
+
+        $user['points'] = $user->answers->count();
+
+        unset($user->answers);
+
+
+        return $user;
+
     }
 
 }

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $user = User::create([
+<<<<<<< HEAD
         'name'=>'Omar Omarain',
         'email' =>'omar@gmail.com',
         'password'=>Hash::make('123456'),
@@ -42,9 +43,31 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
+=======
+            'name' => 'Omar Omarain',
+            'email' => 'omar@gmail.com',
+            'password' => Hash::make('123456'),
+            'role' => 1,
+            'ban' => 0,
+            'authentication' => 1,
+        ]);
+
+        echo $user->createToken('secret')->plainTextToken;
+        Employee::create([
+            'user_id' => 1,
+            'date_of_birth' => '2002-06-05',
+            'resume' => 'top level software engineer',
+            'experience' => '3 Years as a back-end developer',
+            'education' => 'Damascus University',
+            'portfolio' => 'www.omar-omarain.com',
+            'phone_number' => '0951328247',
+            'work_status' => 'working',
+            'graduation_status' => 'graduated',
+        ]);
+>>>>>>> 12dfc9f56ba8a05e82cb1b33ec1ac7c6307e4ece
         Auth_Request::create([
-            'user_id'=>1,
-            'status'=>'accepted'
+            'user_id' => 1,
+            'status' => 'accepted'
         ]);
 
         User::factory(20)->create()->each(function ($user, $index) {
@@ -76,6 +99,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             SectionSeeder::class,
             VacancySeeder::class,
+            AnnouncementSeeder::class
 
 
 

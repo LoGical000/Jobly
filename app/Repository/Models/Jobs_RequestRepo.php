@@ -5,6 +5,7 @@ namespace App\Repository\Models;
 
 
 use App\Models\Jobs_Request;
+use App\Traits\ResponseTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Jobs_RequestRepo extends Reapository
 {
+    use ResponseTrait;
     public function __construct()
     {
         parent::__construct(Jobs_Request::class);
@@ -48,5 +50,11 @@ class Jobs_RequestRepo extends Reapository
         });
 
         return $this->apiResponse('success', $formattedJobApplications);
+    }
+
+    public function getUserRequestsOnVacancy($id){
+        $applications = Jobs_Request::where('vacancy_id',$id)->where('status','pending')->with(['user.employee.image'])->get();
+        $formattedApplicatoins = $this->formatApplicationsResponse($applications);
+        return $this->apiResponse('success',$formattedApplicatoins);
     }
 }

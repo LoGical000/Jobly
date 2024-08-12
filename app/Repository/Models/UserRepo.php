@@ -2,6 +2,9 @@
 
 namespace App\Repository\Models;
 
+use App\Models\Advice;
+use App\Models\Answer;
+use App\Models\Question;
 use App\Models\User;
 use App\Traits\ResponseTrait;
 use Illuminate\Http\Request;
@@ -112,6 +115,20 @@ class UserRepo extends Reapository
         ], 200);
     }
 
+
+    public function getReport(): Response
+    {
+        $advice = Advice::has('reports')->with('user', 'user.employee', 'user.employee.image')->get();
+        $answer = Answer::has('reports')->with('user', 'user.employee', 'user.employee.image')->get();
+        $question = Question::has('reports')->with('user', 'user.employee', 'user.employee.image')->get();
+        $reports['advice'] = $advice;
+        $reports['answer'] = $answer;
+        $reports['question'] = $question;
+
+        return response()->json([
+            'data' => $reports,
+        ]);
+    }
     public function company(): Response
     {
         $comapnies = User::where([['role', 2]])->with('Company')->get();

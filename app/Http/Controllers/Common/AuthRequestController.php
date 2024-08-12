@@ -16,25 +16,26 @@ class AuthRequestController extends Controller
         $this->AuthRequestRepository = $AuthRequestRepository;
     }
 
-    public function create(){
+    public function create()
+    {
         return $this->AuthRequestRepository->store();
     }
-
-
-    public function accept($id){
-        return $this->AuthRequestRepository->accept($id);
-    }
-
-    public function reject($id){
+    public function reject($id)
+    {
         return $this->AuthRequestRepository->reject($id);
     }
-
-    public function getRequest(){
+    public function getRequest()
+    {
         return $this->AuthRequestRepository->getRequest();
     }
 
-    public function delete(){
-        return $this->AuthRequestRepository->delete_request();
+    public function accept($id)
+    {
+        return $this->AuthRequestRepository->accept($id);
     }
 
+    public function delete()
+    {
+        return $this->AuthRequestRepository->delete_request();
+    }
 }

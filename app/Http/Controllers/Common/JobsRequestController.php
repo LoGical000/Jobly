@@ -36,6 +36,12 @@ class JobsRequestController extends Controller
 
     }
 
+    public function getUserRequestsOnVacancy($id){
+
+        return $this->repo->getUserRequestsOnVacancy($id);
+
+    }
+
 
     public function delete($jobs_request_id)
     {

@@ -77,14 +77,20 @@ class EmployeeRepo extends Reapository
 
     public function showProfile(){
         $user = Auth::user();
-        $user->load([
-            'employee.image',
-            'employee.video',
-            'employee.skills',
-            'address',
-        ]);
-        return $this->apiResponse('success',$user);
+
+        $formattedUser = $this->formatProfileResponse($user);
+
+        return $this->apiResponse('success', $formattedUser);
     }
+
+    public function profile($id){
+        $user = User::where('id',$id)->first();
+
+        $formattedUser = $this->formatProfileResponse($user);
+
+        return $this->apiResponse('success', $formattedUser);
+    }
+
 
     public function uploadCV($request){
         $employee  = Employee::where('user_id', Auth::id())->first();
@@ -120,10 +126,5 @@ class EmployeeRepo extends Reapository
 
     }
 
-    public function profile($id){
-        $user = User::where('id',$id)->with('employee','employee.skills', 'employee.image', 'employee.video')->first();
-
-        return $this->apiResponse('success',$user);
-    }
 
 }

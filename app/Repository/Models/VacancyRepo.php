@@ -85,6 +85,22 @@ class VacancyRepo extends Reapository
     {
 
         $vacancies = Vacancy::with(['location', 'user.company'])
+            ->whereHas('user.company', function ($query) use ($id) {
+                $query->where('id', $id);
+            })
+            ->get();
+
+
+        $vacancies = $vacancies->map(function ($vacancy) {
+            return $this->formatVacancyResponse($vacancy);
+        });
+
+        return $this->apiResponse('success', $vacancies);
+    }
+
+    public function getMyJobs(){
+        $id = Auth::id();
+        $vacancies = Vacancy::with(['location', 'user.company'])
             ->whereHas('user', function ($query) use ($id) {
                 $query->where('user_id', $id);
             })
@@ -97,7 +113,6 @@ class VacancyRepo extends Reapository
 
         return $this->apiResponse('success', $vacancies);
     }
-
 
     public function getAllJobsForEmployee()
     {

@@ -72,4 +72,13 @@ class Authinctation extends Controller
     {
         return $this->repo->delete($id);
     }
+
+
+    public function getReport()
+    {
+        return $this->repo->getReport();
+    }
+
+
+
 }

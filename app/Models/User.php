@@ -98,4 +98,13 @@ class User extends Authenticatable
     {
         return $this->hasOne(Auth_Request::class);
     }
+
+    public function advices(){
+        return $this->hasMany(Advice::class);
+
+    }
+
+    public function answers(){
+        return $this->hasMany(Answer::class);
+    }
 }
