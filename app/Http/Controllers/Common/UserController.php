@@ -40,6 +40,13 @@ class UserController extends Controller
         return response()->json(['data' => $user]);
     }
 
+    public function usereBan(){
+        $user = User::where('ban',1 )->all();
+        return response()->json([
+            'data' => $user,
+        ]);
+    }
+
     public function BanUser(int $id)
     {
         $user = User::where('id', $id)->first();
@@ -79,4 +86,11 @@ class UserController extends Controller
     {
         return $this->repo->company();
     }
+    public function employe()
+    {
+        return $this->repo->employe();
+    }
+
+
+    
 }

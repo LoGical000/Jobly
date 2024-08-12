@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::create([
+        $user = User::create([
         'name'=>'Omar Omarain',
         'email' =>'omar@gmail.com',
         'password'=>Hash::make('123456'),
@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         'ban'=> 0,
         'authentication' => 1,
             ]);
+            echo $user->createToken('secret')->plainTextToken;
 
         Employee::create([
             'user_id'=>1,
@@ -39,6 +40,7 @@ class DatabaseSeeder extends Seeder
             'work_status'=>'working',
             'graduation_status'=>'graduated',
         ]);
+
 
         Auth_Request::create([
             'user_id'=>1,

@@ -20,9 +20,17 @@ class AuthRequestController extends Controller
         return $this->AuthRequestRepository->store();
     }
 
-    //This is for 3som
-    public function accept(){
 
+    public function accept($id){
+        return $this->AuthRequestRepository->accept($id);
+    }
+
+    public function reject($id){
+        return $this->AuthRequestRepository->reject($id);
+    }
+
+    public function getRequest(){
+        return $this->AuthRequestRepository->getRequest();
     }
 
     public function delete(){

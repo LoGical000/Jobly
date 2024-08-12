@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('auth__requests', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
-            $table->enum("status", ["accepted", "rejected", "pending"]);
+            $table->enum("status", ["accepted", "rejected", "pending"])->default('pending');
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@ namespace App\Repository\Models;
 
 
 use App\Models\Auth_Request;
+use App\Models\User;
 use App\Traits\ResponseTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
@@ -49,7 +50,38 @@ class Auth_RequestRepo extends Reapository
     }
 
 
-    public function accept(){
+    public function accept($id){
+        $authRequest = Auth_Request::where('id', $id)->first();
+        $authRequest->update([
+            'status' => 'Accepted'
+        ]);
+        $user = User::where('id',$authRequest->user_id)->first();
+        $user->update([
+            'authentication' => 1,
+        ]);
+        return response()->json([
+            'data' => $authRequest,
+        ]);
+    }
+    public function reject($id){
+        $authRequest = Auth_Request::where('user_id', $id)->first();
+        $authRequest->update([
+            'status' => 'rejected'
+        ]);
+        $user = User::where('id',$authRequest->user_id)->first();
+        $user->update([
+            'authentication' => 0,
+        ]);
+        return response()->json([
+            'data' => $authRequest,
+        ]);
+    }
 
+
+    public function getRequest(){
+        $user = Auth_Request::where('status','pending')->with('user')->get();
+        return response()->json([
+            'data' => $user,
+        ]);
     }
 }
