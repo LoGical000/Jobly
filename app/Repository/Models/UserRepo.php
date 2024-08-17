@@ -142,11 +142,35 @@ class UserRepo extends Reapository
                 'company_website' => $comapny->company->company_website,
                 'contact_person' => $comapny->company->contact_person,
                 'contact_email' => $comapny->company->contact_email,
+                'ban' => $comapny->ban,
             ];
         });
 
         return response()->json([
             'data' => $comapnies,
+        ]);
+    }
+
+    public function employe(): Response
+    {
+        $emplyees = User::where([['role', 1]])->with('employee','employee.image')->get();
+        $emplyees = $emplyees->map(function ($Employee) {
+            return [
+                'date_of_birth' => $Employee->employee->date_of_birth,
+                'employee_id' => $Employee->employee->id,
+                'user_id' => $Employee->id,
+                'image' => $Employee->employee->image,
+                'experience' => $Employee->employee->experience,
+                'portfolio' => $Employee->employee->portfolio,
+                'phone_number' => $Employee->employee->phone_number,
+                'work_status' => $Employee->employee->work_status,
+                'graduation_status' => $Employee->employee->graduation_status,
+                'ban' => $Employee->ban,
+            ];
+        });
+
+        return response()->json([
+            'data' => $emplyees,
         ]);
     }
 }

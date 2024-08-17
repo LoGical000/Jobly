@@ -18,7 +18,8 @@ class AuthRequestController extends Controller
         $this->AuthRequestRepository = $AuthRequestRepository;
     }
 
-    public function create(){
+    public function create()
+    {
         return $this->AuthRequestRepository->store();
     }
     public function accept($id)
@@ -38,5 +39,4 @@ class AuthRequestController extends Controller
     {
         return $this->AuthRequestRepository->delete_request();
     }
-
 }

@@ -142,7 +142,6 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
     Route::middleware(['bluebadge'])->group(function () {
         Route::post('advice/create', [\App\Http\Controllers\Common\AdviceController::class, 'create']);
-
     });
 
 
