@@ -15,7 +15,7 @@ class NotificationController extends Controller
 
 
         return response()->json([
-            'notifications' => $notifications
+            'data' => $notifications
         ]);
     }
 
@@ -23,7 +23,7 @@ class NotificationController extends Controller
     {
         $user = auth()->user()->notifications()->findOrFail($id)->markAsRead();
         return response()->json([
-            'notifications' => $user,
+            'data' => $user,
         ]);
     }
 
@@ -31,7 +31,7 @@ class NotificationController extends Controller
     {
         $user = auth()->user()->notifications()->findOrFail($id)->delete();
         return response()->json([
-            'notifications' => 'done'
+            'data' => 'done'
         ]);
     }
 }
