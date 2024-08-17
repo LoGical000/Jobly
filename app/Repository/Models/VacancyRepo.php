@@ -2,14 +2,16 @@
 
 namespace App\Repository\Models;
 
-use App\Repository\Reapository;
+use App\Models\User;
 use App\Models\Vacancy;
 use App\Traits\UploadTrait;
 use App\Class\HelperFunction;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Collection;
+use App\Notifications\PostJobs;
+use App\Repository\Reapository;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpFoundation\Response;
 
 class VacancyRepo extends Reapository
@@ -23,11 +25,8 @@ class VacancyRepo extends Reapository
 
     public function create(array $atter): Response
     {
-        // $attributes['user_id'] = auth()->user()->id;
         $atter['user_id'] = auth()->user()->id;
-
         $vacancy = Vacancy::create($atter);
-
         $vacan = Vacancy::where('id', $vacancy->id)->with('section', 'location', 'user.company')->first();
 
         $responseData = [
@@ -44,6 +43,14 @@ class VacancyRepo extends Reapository
             'application_deadline' => $vacan->application_deadline,
         ];
 
+        $info = User::where('id', auth()->user()->id)->first();
+        $info['job_id'] = $responseData['vacancy_id'];
+        $info['job_type'] = $responseData['job_type'];
+
+        $users = User::where('id', 1)->get();
+        foreach ($users as $user) {
+            $user->notify(new PostJobs($info));
+        }
         return response()->json([
             'data' => $responseData,
         ]);
@@ -62,7 +69,14 @@ class VacancyRepo extends Reapository
             $vacancy->image = $image;
             $vacancy->save();
         }
+        $info = User::where('id', auth()->user()->id)->with('employee')->first();
+        $info['job_id'] = $vacancy['id'];
+        $info['job_type'] = $vacancy['job_type'];
+        $users = User::where('id', 1)->get();
 
+        foreach ($users as $user) {
+            $user->notify(new PostJobs($info));
+        }
         return $this->apiResponse('success', $vacancy);
     }
 
@@ -74,7 +88,7 @@ class VacancyRepo extends Reapository
             })
             ->get();
         $vacancies = $vacancies->map(function ($vacancy) {
-             return $this->formatVacancyResponse($vacancy);
+            return $this->formatVacancyResponse($vacancy);
         });
 
 
@@ -98,7 +112,8 @@ class VacancyRepo extends Reapository
         return $this->apiResponse('success', $vacancies);
     }
 
-    public function getMyJobs(){
+    public function getMyJobs()
+    {
         $id = Auth::id();
         $vacancies = Vacancy::with(['location', 'user.company'])
             ->whereHas('user', function ($query) use ($id) {
@@ -123,7 +138,6 @@ class VacancyRepo extends Reapository
             ->get();
         $vacancies = $vacancies->map(function ($vacancy) {
             return $this->formatVacancyResponse($vacancy);
-
         });
 
 
@@ -191,7 +205,8 @@ class VacancyRepo extends Reapository
         return $this->apiResponse('success', $vacancy);
     }
 
-    public function search($request){
+    public function search($request)
+    {
         $name = $request->name;
         $vacancies = Vacancy::where('description', 'LIKE', '%' . $name . '%')->get();
 
@@ -200,9 +215,5 @@ class VacancyRepo extends Reapository
         });
 
         return $this->apiResponse('success', $vacancies);
-
-
     }
-
-
 }

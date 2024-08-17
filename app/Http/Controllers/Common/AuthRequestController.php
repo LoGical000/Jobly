@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Repository\Models\Auth_RequestRepo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\Au;
+
 
 class AuthRequestController extends Controller
 {
@@ -19,6 +21,10 @@ class AuthRequestController extends Controller
     public function create(){
         return $this->AuthRequestRepository->store();
     }
+    public function accept($id)
+    {
+        return $this->AuthRequestRepository->accept($id);
+    }
     public function reject($id)
     {
         return $this->AuthRequestRepository->reject($id);
@@ -28,13 +34,8 @@ class AuthRequestController extends Controller
         return $this->AuthRequestRepository->getRequest();
     }
 
-    //This is for 3som
-    public function accept(){
-        return $this->AuthRequestRepository->accept($id);
-
-    }
-
-    public function delete(){
+    public function delete()
+    {
         return $this->AuthRequestRepository->delete_request();
     }
 

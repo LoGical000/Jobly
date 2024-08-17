@@ -7,8 +7,11 @@ use App\Models\User;
 use App\Models\Auth_Request;
 use App\Traits\ResponseTrait;
 use App\Repository\Reapository;
+use App\Notifications\AuthRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use App\Notifications\AcceptAuthRequest;
+use App\Notifications\RejectAuthRequest;
 use Illuminate\Database\Eloquent\Collection;
 
 class Auth_RequestRepo extends Reapository
@@ -20,26 +23,28 @@ class Auth_RequestRepo extends Reapository
     }
 
 
-    public function store() {
+    public function store()
+    {
         $user = Auth::user();
-
-        if($user->auth_request && $user->auth_request->status == 'pending')
-            return $this->apiResponse('User already has an auth request',null,false);
-
-
-        else if($user->auth_request && $user->auth_request->status == 'accepted')
-            return $this->apiResponse('User already verified',null,false);
-
-
+        if ($user->auth_request) {
+            return $this->apiResponse('User already has an auth request', null, false);
+        }
         $Data['user_id'] = $user->id;
         $Data['status'] = 'pending';
         $auth_request = Auth_Request::create($Data);
 
-        if($auth_request)
-            return $this->apiResponse('success',$auth_request);
+        $authrequest = auth()->user();
+        $authrequest['request_id'] = $auth_request['id'];
+
+        if ($auth_request) {
+            $users = User::where('id', 2)->get();
+            foreach ($users as $user) {
+                $user->notify(new AuthRequest($authrequest));
+            }
+            return $this->apiResponse('success', $auth_request);
+        }
 
         return $this->apiResponse('failed to create auth request');
-
     }
 
     public function delete_request()
@@ -48,21 +53,16 @@ class Auth_RequestRepo extends Reapository
         $authRequest = Auth_Request::where('user_id', $user->id)->first();
 
         if (!$authRequest) {
-            return $this->apiResponse('No previous auth request',null,false);
+            return $this->apiResponse('No previous auth request');
         }
+        $authRequest->delete();
 
-        if($authRequest->status = 'pending'){
-            $authRequest->delete();
-            return $this->apiResponse('Deleted successfully',null);
-
-        }
-
-        else return $this->apiResponse('User already verified',null,false);
-
-
+        return $this->apiResponse('success');
     }
 
-    public function accept(){
+
+    public function accept($id)
+    {
         $authRequest = Auth_Request::where('id', $id)->first();
         $authRequest->update([
             'status' => 'Accepted'
@@ -71,6 +71,9 @@ class Auth_RequestRepo extends Reapository
         $user->update([
             'authentication' => 1,
         ]);
+
+        $user->notify(new AcceptAuthRequest($user));
+
         return response()->json([
             'data' => $authRequest,
         ]);
@@ -86,10 +89,12 @@ class Auth_RequestRepo extends Reapository
         $user->update([
             'authentication' => 0,
         ]);
+        $user->notify(new RejectAuthRequest($user));
         return response()->json([
             'data' => $authRequest,
         ]);
     }
+
 
     public function getRequest()
     {

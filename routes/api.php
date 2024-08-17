@@ -1,20 +1,21 @@
 <?php
 
+use App\Http\Middleware\Ban;
 use Illuminate\Http\Request;
 use App\Http\Middleware\company;
 use App\Http\Middleware\employee;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Authinctation;
 use App\Http\Controllers\Common\UserController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Common\HeplerController;
 use App\Http\Controllers\Common\AddressController;
 use App\Http\Controllers\Common\SectionController;
 use App\Http\Controllers\Common\CategoryController;
+use App\Http\Controllers\common\locationController;
 use App\Http\Controllers\Company\CompanyController;
 use App\Http\Controllers\Company\VacancyController;
 use App\Http\Controllers\Common\JobsRequestController;
-use App\Http\Controllers\common\locationController;
-use App\Http\Middleware\Ban;
 
 Route::post('register', [Authinctation::class, 'register']);
 Route::post('login', [Authinctation::class, 'login']);
@@ -67,7 +68,6 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
     Route::post('ReqquestJobs/delete/{jobs_request_id}', [JobsRequestController::class, 'delete']);
     Route::post('ReqquestJobs/accept/{jobs_request_id}', [JobsRequestController::class, 'accept']);
-   //
     Route::post('ReqquestJobs/reject/{jobs_request_id}', [JobsRequestController::class, 'reject']);
 
 
@@ -88,12 +88,15 @@ Route::middleware(['auth:sanctum', 'ban'])->group(function () {
 
     Route::post('auth_request/create', [\App\Http\Controllers\Common\AuthRequestController::class, 'create']);
     Route::post('auth_request/delete', [\App\Http\Controllers\Common\AuthRequestController::class, 'delete']);
-    Route::post('auth_request/accept', [\App\Http\Controllers\Common\AuthRequestController::class, 'accept']);
-
-    //
-
+    Route::post('auth_request/accept/{id}', [\App\Http\Controllers\Common\AuthRequestController::class, 'accept']);
     Route::post('auth_request/reject/{id}', [\App\Http\Controllers\Common\AuthRequestController::class, 'reject']);
     Route::get('auth_request/getRequest', [\App\Http\Controllers\Common\AuthRequestController::class, 'getRequest']);
+
+
+//
+    Route::get('getNotifications', [NotificationController::class, 'getNotifications']);
+    Route::post('markAsRead/{id}', [NotificationController::class, 'markNotificationsAsRead']);
+    Route::post('deleteNotification/{id}', [NotificationController::class, 'deleteNotification']);
 
 //
 

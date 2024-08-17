@@ -23,10 +23,10 @@ class AnnouncementRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'type' => ['required','in:course,internship'],
-            'start_date' => ['required', 'date'],
+            'type' => ['required', 'in:course,internship'],
+            'start_date' => ['required'],
             'days' => ['required', 'string'],
-            'time' => ['required','string'],
+            'time' => ['required', 'string'],
             'price' => ['required', 'string'],
             'duration' => ['required', 'string'],
         ];

@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\Common;
 
-use App\Http\Controllers\Controller;
-use App\Models\Jobs_Request;
-use App\Models\Vacancy;
-use App\Repository\Models\Jobs_RequestRepo;
-use App\Traits\ResponseTrait;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Company;
+use App\Models\Vacancy;
+use App\Models\Jobs_Request;
 use Illuminate\Http\Request;
+use App\Traits\ResponseTrait;
+use App\Http\Controllers\Controller;
+use App\Notifications\AcceptRequest;
+use App\Notifications\RejectRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Repository\Models\Jobs_RequestRepo;
+
 
 class JobsRequestController extends Controller
 {
@@ -63,9 +68,13 @@ class JobsRequestController extends Controller
         $data->update([
             'status' => "Accepted",
         ]);
-//        return response()->json([
-//            'data' => $data,
-//        ]);
+        $job = Vacancy::where('id', $data['vacancy_id'])->first();
+        $company = Company::where('id',$job['id'])->first();
+        $user = User::where('id', $data['user_id'])->first();
+        $user['company_name'] = $company['company_name'];
+        $user['job_id'] = $job['id'];
+        $user->notify(new AcceptRequest($user));
+
         return $this->apiResponse('success',$data);
     }
 
@@ -77,9 +86,15 @@ class JobsRequestController extends Controller
             'status' => "Rejected",
         ]);
 
-//        return response()->json([
-//            'data' => $data,
-//        ]);
+        $job = Vacancy::where('id', $data['vacancy_id'])->first();
+        $company = Company::where('id', $job['id'])->first();
+        $user = User::where('id', $data['user_id'])->first();
+        $user['company_name'] = $company['company_name'];
+        $user['job_id'] = $job['id'];
+        
+        $user->notify(new RejectRequest($user));
+
+
         return $this->apiResponse('success',$data);
 
     }

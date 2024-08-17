@@ -98,9 +98,7 @@ class VacancyController extends Controller
         $vacancies = $user->vacancy->where('id', $id)->map(function ($vacancy) use ($user) {
             return [
                 'company_name' => $user->company->company_name,
-                // 'county' => $user->address->county,
-                // 'city' => $user->address->city,
-                // 'Governorate' => $user->address->Governorate,
+    
                 'section' => $vacancy->section->section,
                 'user_id' => $vacancy->user_id,
                 'vacancy_id' => $vacancy->id,
